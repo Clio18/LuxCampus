@@ -5,48 +5,211 @@ import java.util.Arrays;
 public class CrystalMethods {
     public static void main(String[] args) {
 
-        printArray(new char[]{'a', 'b', 'x'});
+        System.out.println("#1: ");
+        printArray(new char[]{'a', 'b'});
         System.out.println();
 
-        printArray(fromIntToChar(new int[]{65, 66, 67}));
+
+        char[] expectedCharArray = new char[]{'A', 'B', 'C'};
+        char[] actualCharArray = fromIntToChar(new int[]{65, 66, 67});
+        assertEqualsArray("#2", actualCharArray, expectedCharArray);
+
+        int expectedMax = 99;
+        int actualMax = biggerBetweenTwo(9, 99);
+        assertEquals("#3", actualMax, expectedMax);
+
+        int expectedMaxOfThree = 1000;
+        int actualMaxOfThree = biggerBetweenThree(9, 99, 1000);
+        assertEquals("#4", actualMax, expectedMax);
+
+        int expectedMaxOfFive = 1000;
+        int actualMaxOfFive = biggerBetweenFive(9, 99, 1000, 1, 99);
+        assertEquals("#5", actualMax, expectedMax);
+
+        String expectedString = "ABX";
+        String actualString = stringMaker(new char[]{'A', 'B', 'X'});
+        assertEquals("#6", actualString, expectedString);
+
+        int expectedIndex = 1;
+        int actualIndex = findIndex(new int[]{1, 2, 3, 4, 2, 6}, 2);
+        assertEquals("#8", actualMax, expectedMax);
+
+        int expectedIndexFromEnd = 5;
+        int actualIndexFromEnd = findIndex(new int[]{1, 2, 3, 4, 2, 6}, 6);
+        assertEquals("#9", actualMax, expectedMax);
+
+        long expectedFactorial = 6;
+        long actualFactorial = factorial(3);
+        assertEquals("#10", actualMax, expectedMax);
+
+        boolean expectedAnswer = true;
+        boolean actualAnswer = isHighYear(2100);
+        assertEquals("#11", actualMax, expectedMax);
+
+        System.out.println("#12: ");
+        findDivided(new int[]{65, 66, 67, 68, 68, 69, 70, 71}, 2);
         System.out.println();
+        int[] actualDivided = findDividedTest(new int[]{65, 66, 67, 68, 68, 69, 70, 71}, 2);
+        int[] expectedDivided = new int[]{66, 68, 68, 70};
+        assertEqualsArray("#12 ----------Test method: ", actualDivided, expectedDivided);
 
-        System.out.println(biggerBetweenTwo(99, 99));
 
-        System.out.println(biggerBetweenThree(9, 5, 9));
-
-        System.out.println(biggerBetweenFive(9, 5, 9, 1, 11));
-
-        System.out.println(stringMaker(new char[]{'a', 'b', 'x'}));
-
-        System.out.println(findIndex(new int[]{65, 66, 67}, 67));
-
-        System.out.println(findIndexFromEnd(new int[]{65, 66, 67, 68, 69, 70, 71}, 65));
-
-        System.out.println(factorial(32));
-
-        System.out.println(isHighYear(2100));
-
-        findDivided(new int[]{65, 66, 67, 68, 69, 70, 71}, 2);
-        System.out.println();
-
+        System.out.println("#13: ");
         sortAsc(new int[]{5, 66, 67, 68, 9, 702, 71});
         System.out.println();
+        int[] actualSorted = sortAscTest(new int[]{5, 66, 67, 68, 9, 702, 71});
+        int[] expectedSorted = new int[]{5, 9, 66, 67, 68, 71, 702};
+        assertEqualsArray("#13 ---------Test method: ", actualSorted, expectedSorted);
 
-        System.out.println(Arrays.toString(multiplication(new int[]{5, 6, 7}, new int[]{5, 6, 7})));
+        boolean actualResult = ifContains(new byte[]{1, 2, 3, 4, 4});
+        boolean expectedResult = true;
+        assertEquals("#14", actualResult, expectedResult);
 
-        System.out.println(Arrays.toString(notSame(new int[]{5, 3, 7, 2, 5, 11}, new int[]{5, 6, 7, 9, 6, 22})));
+        int[] actualMultiArray = multiplication(new int[]{5, 6, 7}, new int[]{5, 6, 7});
+        int[] expectedMultiArray = new int[]{25, 36, 49};
+        assertEqualsArray("#15", actualMultiArray, expectedMultiArray);
 
-        System.out.println(Arrays.toString(reverse(new int[]{1, 2, 3, 4})));
 
-        System.out.println(Arrays.toString(create(5, 1, 10)));
+        int[] concatenatedArray = concatArray(new int[]{5, 3, 7, 2, 5, 11}, new int[]{5, 6, 7, 9, 6, 22});
+        int[] actualIntArray = uniqueElement(concatenatedArray);
+        int[] expectedIntArray = new int[]{2, 3, 9, 11, 22};
+        int[] actualAsc = sortAscTest(actualIntArray);
+        assertEqualsArray("#16", actualAsc, expectedIntArray);
 
-        System.out.println(ifContains(new char[]{'a', 'b', 'x', 'n', 'o'}, new char[]{'j', 'j', 'j'}));
+        int[] actualReversed = reverse(new int[]{1, 2, 3, 4});
+        int[] expectedReversed = new int[]{4, 3, 2, 1};
+        assertEqualsArray("#17", actualReversed, expectedReversed);
 
-        System.out.println(ifContains(new byte[]{1, 2, 3, 4, 4}));
+        int actualSize = createArray(5, 1, 10).length;
+        int expectedSize = 5;
+        assertEquals("----------#18 Length of array : ", actualSize, expectedIndexFromEnd);
+        int actualMin = Arrays.stream(createArray(5, 1, 10)).min().getAsInt();
+        int expectedMin = 0;
+        assertEquals("----------#18 Minimum value in array : ", expectedMin < actualMin, true);
+        int actualMaximum = Arrays.stream(createArray(5, 1, 10)).max().getAsInt();
+        int expectedMaximum = 11;
+        assertEquals("----------#18 Maximum value in array : ", expectedMaximum > actualMaximum, true);
 
-        System.out.println(Arrays.toString(notSame(new int[]{5, 3, 7, 2, 11, 13, 13}, new int[]{5, 6, 7, 9, 11, 11, 12, 13})));
 
+        boolean actualIfContain = ifContains(new char[]{'a', 'b', 'x', 'n', 'o'}, new char[]{'j', 'j', 'j'});
+        boolean expectedIfContain = false;
+        assertEquals("#19", actualIfContain, expectedIfContain);
+
+
+    }
+
+    static void assertEquals(String testId, boolean actual, boolean expected) {
+        if (expected == actual) {
+            System.out.println("TEST " + testId + " PASSED");
+        } else {
+            System.out.println("TEST " + testId + " FAILED! Expected: " +
+                    expected + " Actual: " + actual);
+        }
+    }
+
+    static void assertEquals(String testId, int actual, int expected) {
+        if (expected == actual) {
+            System.out.println("TEST " + testId + " PASSED");
+        } else {
+            System.out.println("TEST " + testId + " FAILED! Expected: " +
+                    expected + " Actual: " + actual);
+        }
+    }
+
+    static void assertEquals(String testId, long actual, long expected) {
+        if (expected == actual) {
+            System.out.println("TEST " + testId + " PASSED");
+        } else {
+            System.out.println("TEST " + testId + " FAILED! Expected: " +
+                    expected + " Actual: " + actual);
+        }
+    }
+
+    static void assertEquals(String testId, String actual, String expected) {
+        if (expected.equals(actual)) {
+            System.out.println("TEST " + testId + " PASSED");
+        } else {
+            System.out.println("TEST " + testId + " FAILED! Expected: " +
+                    expected + " Actual: " + actual);
+        }
+    }
+
+    static void assertEqualsArray(String testId, long[] actual, long[] expected) {
+        int count = 0;
+        if (actual.length == expected.length) {
+            for (int i = 0; i < actual.length; i++) {
+                if (actual[i] == expected[i]) {
+                    count++;
+                }
+            }
+            if (count == actual.length) {
+                System.out.println("TEST " + testId + " PASSED");
+            } else {
+                System.out.println("TEST " + testId + " FAILED!");
+                System.out.print("Expected: ");
+                System.out.println(Arrays.toString(expected));
+                System.out.print("Actual: ");
+                System.out.println(Arrays.toString(actual));
+            }
+        } else {
+            System.out.println("TEST " + testId + " FAILED!");
+            System.out.print("Expected: ");
+            System.out.println(Arrays.toString(expected));
+            System.out.print("Actual: ");
+            System.out.println(Arrays.toString(actual));
+        }
+    }
+
+    static void assertEqualsArray(String testId, char[] actual, char[] expected) {
+        int count = 0;
+        if (actual.length == expected.length) {
+            for (int i = 0; i < actual.length; i++) {
+                if (actual[i] == expected[i]) {
+                    count++;
+                }
+            }
+            if (count == actual.length) {
+                System.out.println("TEST " + testId + " PASSED");
+            } else {
+                System.out.println("TEST " + testId + " FAILED!");
+                System.out.print("Expected: ");
+                System.out.println(Arrays.toString(expected));
+                System.out.print("Actual: ");
+                System.out.println(Arrays.toString(actual));
+            }
+        } else {
+            System.out.println("TEST " + testId + " FAILED!");
+            System.out.print("Expected: ");
+            System.out.println(Arrays.toString(expected));
+            System.out.print("Actual: ");
+            System.out.println(Arrays.toString(actual));
+        }
+    }
+
+    static void assertEqualsArray(String testId, int[] actual, int[] expected) {
+        int count = 0;
+        if (actual.length == expected.length) {
+            for (int i = 0; i < actual.length; i++) {
+                if (actual[i] == expected[i]) {
+                    count++;
+                }
+            }
+            if (count == actual.length) {
+                System.out.println("TEST " + testId + " PASSED");
+            } else {
+                System.out.println("TEST " + testId + " FAILED!");
+                System.out.print("Expected: ");
+                System.out.println(Arrays.toString(expected));
+                System.out.print("Actual: ");
+                System.out.println(Arrays.toString(actual));
+            }
+        } else {
+            System.out.println("TEST " + testId + " FAILED!");
+            System.out.print("Expected: ");
+            System.out.println(Arrays.toString(expected));
+            System.out.print("Actual: ");
+            System.out.println(Arrays.toString(actual));
+        }
     }
 
     //1) принимает массив чаров, выводит его на экран
@@ -157,6 +320,24 @@ public class CrystalMethods {
         }
     }
 
+    static int[] findDividedTest(int[] array, int value) {
+        int counter = 0;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] % value == 0) {
+                counter++;
+            }
+        }
+        int[] result = new int[counter];
+        int index = counter - 1;
+        for (int i = array.length - 1; i > 0; i--) {
+            if (array[i] % value == 0) {
+                result[index] = array[i];
+                index--;
+            }
+        }
+        return result;
+    }
+
     //13) метод принимает массив интов сортирует его по возрастанию
     static void sortAsc(int[] array) {
         // [xxxx.]
@@ -175,6 +356,22 @@ public class CrystalMethods {
         for (int a = 0; a < array.length; a++) {
             System.out.print(array[a] + " ");
         }
+    }
+
+    static int[] sortAscTest(int[] array) {
+        // [xxxx.]
+        for (int i = 0; i < array.length - 1; i++) {
+            //[.xxxx]
+            for (int j = i + 1; j < array.length; j++) {
+                if (array[i] > array[j]) {
+                    //replace
+                    int x = array[i];
+                    array[i] = array[j];
+                    array[j] = x;
+                }
+            }
+        }
+        return array;
     }
 
     //14) принимает массив байт, если в массиве есть повторяющиеся елементы, возвращает тру
@@ -207,36 +404,6 @@ public class CrystalMethods {
     }
 
     //16) принимает два массива интов, возвращает массив из елементов которые не совпадают в массивах
-    static int[] notSame(int[] a, int[] b) {
-        int count = findSize(a, b);
-        int[] same = findSame(count, a, b);
-        int[] concat = concatArray(a, b);
-        return returnUnique(same, concat);
-    }
-    /* find quantity of same items */
-    static int findSize(int[] a, int[] b) {
-        int count = 0;
-        for (int i = 0; i < a.length; i++) {
-            for (int j = 0; j < b.length; j++) {
-                if (a[i] == b[j]) {
-                    count++;
-                }
-            }
-        }
-        return count;
-    }
-    /* return the array of the same items */
-    static int[] findSame(int count, int[] a, int[] b) {
-        int[] same = new int[count];
-        for (int i = 0; i < a.length; i++) {
-            for (int j = 0; j < b.length; j++) {
-                if (a[i] == b[j]) {
-                    same[--count] = a[i];
-                }
-            }
-        }
-        return same;
-    }
     /* concatenate two arrays */
     static int[] concatArray(int[] a, int[] b) {
         int length = a.length + b.length;
@@ -253,38 +420,36 @@ public class CrystalMethods {
         return c;
 
     }
-    /* for each item in the concat array we check how many times it do not  equal to the items in
-    * same array: if counter equals the length of the same array
-    * it means that this item is unique
-    * so we have another counter which is incremented in this case
-    * ut shows how many unique items we have in concat array  */
-    static int[] returnUnique(int[] same, int[] concat) {
-        int a = 0;
-        int b = 0;
-        for (int i = 0; i < concat.length; i++) {
-            for (int j = 0; j < same.length; j++) {
-                if (concat[i] != same[j]) {
-                    a++;
+
+    static int[] uniqueElement(int[] array) {
+        //find the size of the resulting array
+        int size = 0;
+        int elementCounter = 0;
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array.length; j++) {
+                if (array[i] == array[j]) {
+                    elementCounter++;
                 }
             }
-            if (a == same.length) {
-                b++;
+            if (elementCounter == 1) {
+                size++;
             }
-            a = 0;
-        }
-        int[] result = new int[b];
-        for (int i = 0; i < concat.length; i++) {
-            for (int j = 0; j < same.length; j++) {
-                if (concat[i] != same[j]) {
-                    a++;
-                }
-            }
-            if (a == same.length) {
-                result[--b] = concat[i];
-            }
-            a = 0;
+            elementCounter = 0;
         }
 
+        //find the array of unique elements
+        int[] result = new int[size];
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array.length; j++) {
+                if (array[i] == array[j]) {
+                    elementCounter++;
+                }
+            }
+            if (elementCounter == 1) {
+                result[--size] = array[i];
+            }
+            elementCounter = 0;
+        }
         return result;
     }
 
@@ -305,7 +470,7 @@ public class CrystalMethods {
     //- верхняя граница
     //возвращает массив интов заданой длинный,
     //* который содержит случайные числа от нижней границы до верхней границы"
-    static int[] create(int size, int bottom, int up) {
+    static int[] createArray(int size, int bottom, int up) {
         int[] array = new int[size];
         for (int i = 0; i < size; i++) {
             array[i] = bottom + (int) (Math.random() * ((up - bottom) + 1));
