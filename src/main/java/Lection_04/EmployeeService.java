@@ -2,7 +2,7 @@ package Lection_04;
 
 public class EmployeeService {
 
-    private Employee[] employees;
+    Employee[] employees;
 
     public EmployeeService(Employee[] employees) {
         this.employees = employees;

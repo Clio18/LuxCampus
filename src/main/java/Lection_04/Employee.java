@@ -28,6 +28,11 @@ public static double defaultBugRate = 100;
         this.name = name;
     }
 
+    public Employee(String name, double salary) {
+        this.name = name;
+        this.salary = salary;
+    }
+
     public long getId() {
         return id;
     }
