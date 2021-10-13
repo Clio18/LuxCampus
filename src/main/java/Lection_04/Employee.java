@@ -1,5 +1,7 @@
 package Lection_04;
 
+import java.util.Objects;
+
 public class Employee {
     //Каждый сотрудник имеет следующие свойства
     //id, name, age, salary, gender, fixedBugs, defaultBugRate
@@ -85,5 +87,16 @@ public static double defaultBugRate = 100;
                 ", fixedBugs=" + fixedBugs;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return id == employee.id && age == employee.age && Double.compare(employee.salary, salary) == 0 && fixedBugs == employee.fixedBugs && name.equals(employee.name) && gender.equals(employee.gender);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, age, salary, gender, fixedBugs);
+    }
 }

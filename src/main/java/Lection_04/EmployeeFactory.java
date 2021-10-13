@@ -3,19 +3,17 @@ package Lection_04;
 import java.util.Random;
 
 public class EmployeeFactory {
-    private Employee [] employees;
 
-    public EmployeeFactory(int size) {
-        this.employees = generateEmployees(size);
+//генерирует заданое количество сотрудников
+    public Employee[] generateDefaultEmployees() {
+        return new Employee[]{
+                new Employee("Aa", 22, 5000, Gender.MALE, 11),
+                new Employee("Ab", 22, 5000, Gender.MALE, 11),
+                new Employee("Ac", 22, 5000, Gender.MALE, 11),
+                new Employee("Aa", 22, 15000, Gender.MALE, 11),
+        };
     }
 
-    public Employee[] getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(Employee[] employees) {
-        this.employees = employees;
-    }
 
     //Написать класс EmployeeFactory с методом:
     //generateEmployees(size) -> генерирует случайным образом заданое количество сотрудников
