@@ -6,22 +6,28 @@ public class Employee {
     //Каждый сотрудник имеет следующие свойства
     //id, name, age, salary, gender, fixedBugs, defaultBugRate
 private long id;
-private static long generator = 1;
 private String name;
 private int age;
-private double salary;
-private Enum gender;
-private int fixedBugs;
+protected double salary;
+private Gender gender;
+protected int fixedBugs;
 public static double defaultBugRate = 100;
 
-    public Employee(String name, int age, double salary, Enum gender, int fixedBugs) {
-        //id auto generation
-        this.id = generator++;
+    public Employee(long id, String name, int age, double salary, Gender gender, int fixedBugs) {
+        this.id = id;
         this.name = name;
         this.age = age;
         this.salary = salary;
         this.gender = gender;
         this.fixedBugs = fixedBugs;
+    }
+
+    public Employee(long id, String name, int age, double salary, Gender gender) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.salary = salary;
+        this.gender = gender;
     }
 
     public Employee(String name) {
@@ -65,11 +71,11 @@ public static double defaultBugRate = 100;
         this.salary = salary;
     }
 
-    public Enum getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(Enum gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
@@ -79,6 +85,10 @@ public static double defaultBugRate = 100;
 
     public void setFixedBugs(int fixedBugs) {
         this.fixedBugs = fixedBugs;
+    }
+
+    public double earn (){
+      return  salary + fixedBugs * defaultBugRate;
     }
 
     @Override

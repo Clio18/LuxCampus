@@ -14,7 +14,7 @@ public class Test {
         assertEquals("calculateSalaryAndBonus", actualCash, expectedCash);
 
         Employee actualEmployee = employeeService.getById(2);
-        Employee expectedEmployee = new Employee("Ab", 22, 5000.0, Gender.MALE, 11);
+        Employee expectedEmployee = new Employee(2, "Ab", 22, 5000.0, Gender.FEMALE, 11);
         expectedEmployee.setId(2);
         assertEquals("getById", actualEmployee, expectedEmployee);
 
@@ -39,8 +39,7 @@ public class Test {
         };
         assertEqualsArrayNameAndSalary("sortByNameAndSalary", employeeService.employees, expectedEmployeesNameAndSalary);
 
-        Employee employee = new Employee("TOMMY", 89, 7777.00, Gender.MALE, 9);
-        employee.setId(1);
+        Employee employee = new Employee(1, "TOMMY", 89, 7777.00, Gender.MALE, 9);
         employeeService.edit(employee);
         Employee actualNewEmployee = employeeService.getById(1);
         assertEquals("edit", actualNewEmployee, employee);

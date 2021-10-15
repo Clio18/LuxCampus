@@ -21,8 +21,7 @@ public class EmployeeService {
     public double calculateSalaryAndBonus() {
         double payments = 0;
         for (Employee employee : employees) {
-            payments = payments + employee.getSalary() +
-                    (employee.getFixedBugs() * Employee.defaultBugRate);
+            payments = payments + employee.earn();
         }
         return (Math.round(payments * 100)) / 100.0;
     }
@@ -59,44 +58,43 @@ public class EmployeeService {
     //Employee[] sortByName()
     public Employee[] sortByName() {
         int n = employees.length;
-        for (int i = 0; i < n-1; i++)
-            for (int j = 0; j < n-i-1; j++)
-                if (employees[j].getName().compareTo(employees[j+1].getName())>0) {
+        for (int i = 0; i < n - 1; i++)
+            for (int j = 0; j < n - i - 1; j++)
+                if (employees[j].getName().compareTo(employees[j + 1].getName()) > 0) {
                     Employee temp = employees[j];
-                    employees[j] = employees[j+1];
-                    employees[j+1] = temp;
+                    employees[j] = employees[j + 1];
+                    employees[j + 1] = temp;
                 }
         return employees;
     }
 
 
-//    //Employee[] sortByNameAndSalary() -> возвращают отсортированный массив с сотрудниками по критерию
+    //Employee[] sortByNameAndSalary() -> возвращают отсортированный массив с сотрудниками по критерию
     public Employee[] sortByNameAndSalary() {
         int n = employees.length;
-        for (int i = 0; i < n-1; i++)
-            for (int j = 0; j < n-i-1; j++)
-                if (employees[j].getName().compareTo(employees[j+1].getName())>0) {
+        for (int i = 0; i < n - 1; i++)
+            for (int j = 0; j < n - i - 1; j++)
+                if (employees[j].getName().compareTo(employees[j + 1].getName()) > 0) {
                     Employee temp = employees[j];
-                    employees[j] = employees[j+1];
-                    employees[j+1] = temp;
-                } else
-                    if (employees[j].getName().equals(employees[j+1].getName())) {
-                        if (employees[j].getSalary() < employees[j + 1].getSalary()) {
-                            Employee temp = employees[j];
-                            employees[j] = employees[j + 1];
-                            employees[j + 1] = temp;
-                        }
+                    employees[j] = employees[j + 1];
+                    employees[j + 1] = temp;
+                } else if (employees[j].getName().equals(employees[j + 1].getName())) {
+                    if (employees[j].getSalary() < employees[j + 1].getSalary()) {
+                        Employee temp = employees[j];
+                        employees[j] = employees[j + 1];
+                        employees[j + 1] = temp;
                     }
+                }
         return employees;
     }
 
-//Employee edit(Employee) -> находит сотрудника по id, и подменяет информацию о нем на новую.
-// Старую версию сотрудника метод возвращает.
-   public Employee edit(Employee newEmployee) {
+    //Employee edit(Employee) -> находит сотрудника по id, и подменяет информацию о нем на новую.
+    // Старую версию сотрудника метод возвращает.
+    public Employee edit(Employee newEmployee) {
         Employee old = getById(newEmployee.getId());
-        Employee oldCopy = new Employee(old.getName(), old.getAge(),
+        Employee oldCopy = new Employee(old.getId(), old.getName(), old.getAge(),
                 old.getSalary(), old.getGender(), old.getFixedBugs());
-        oldCopy.setId(old.getId());
+        oldCopy.setId(newEmployee.getId());
         old.setName(newEmployee.getName());
         old.setAge(newEmployee.getAge());
         old.setSalary(newEmployee.getSalary());
@@ -105,17 +103,17 @@ public class EmployeeService {
         return oldCopy;
     }
 
-//Employee remove(long id) -> находит сотрудника по id, и удаляет его из массива.
-// Возвращает ссылку на удаленного сотрудника.
-    public Employee remove (long id) {
+    //Employee remove(long id) -> находит сотрудника по id, и удаляет его из массива.
+    //Возвращает ссылку на удаленного сотрудника.
+    public Employee remove(long id) {
         Employee old = getById(id);
-        int n = employees.length-1;
-        Employee newArray [] = new Employee[n];
+        int n = employees.length - 1;
+        Employee newArray[] = new Employee[n];
         int counter = 0;
-        for(Employee employee: employees){
-            if(employee.getId()==id){
+        for (Employee employee : employees) {
+            if (employee.getId() == id) {
                 continue;
-            }else{
+            } else {
                 newArray[counter] = employee;
                 counter++;
             }
