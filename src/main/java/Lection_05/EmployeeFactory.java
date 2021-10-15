@@ -1,5 +1,12 @@
 package Lection_05;
 
+import Lection_05.Data.Gender;
+import Lection_05.Data.NameSource;
+import Lection_05.Entity.Designer;
+import Lection_05.Entity.Developer;
+import Lection_05.Entity.Employee;
+import Lection_05.Entity.Manager;
+
 import java.util.Random;
 
 public class EmployeeFactory {

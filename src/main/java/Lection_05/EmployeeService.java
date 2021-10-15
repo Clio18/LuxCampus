@@ -1,8 +1,10 @@
 package Lection_05;
 
+import Lection_05.Entity.Employee;
+
 public class EmployeeService {
 
-    Employee[] employees;
+    public Employee[] employees;
 
     public EmployeeService(Employee[] employees) {
         this.employees = employees;

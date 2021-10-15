@@ -1,4 +1,6 @@
-package Lection_05;
+package Lection_05.Entity;
+
+import Lection_05.Data.Gender;
 
 import java.util.Random;
 

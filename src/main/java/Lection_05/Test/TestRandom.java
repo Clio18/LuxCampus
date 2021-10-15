@@ -1,4 +1,10 @@
-package Lection_05;
+package Lection_05.Test;
+
+import Lection_05.EmployeeFactory;
+import Lection_05.EmployeeService;
+import Lection_05.Entity.Designer;
+import Lection_05.Entity.Employee;
+import Lection_05.Data.Gender;
 
 public class TestRandom {
     public static void main(String[] args) {
