@@ -48,7 +48,7 @@ public class EmployeeService {
             }
         }
         Employee[] target = new Employee[counter];
-        for (int i = 0; i < employees.length; i++) {
+        for (int i = employees.length-1; i >0; i--) {
             if (employees[i].getName().equals(name)) {
                 target[counter - 1] = employees[i];
                 --counter;

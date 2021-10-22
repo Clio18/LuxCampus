@@ -50,7 +50,8 @@ public class EmployeeFactory {
                 Manager employee = new Manager(id, name, age, salary, gender);
                 employees[i] = employee;
             } else {
-                Developer employee = new Developer(id, name, age, salary, gender, fixedBugs);
+                int coeff = random.nextBoolean()?2:0;
+                Developer employee = new Developer(id, name, age, salary, gender, fixedBugs, coeff);
                 employees[i] = employee;
             }
         }

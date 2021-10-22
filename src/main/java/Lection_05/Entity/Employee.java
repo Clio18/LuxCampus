@@ -2,6 +2,7 @@ package Lection_05.Entity;
 
 import Lection_05.Data.Gender;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Employee {
@@ -93,6 +94,9 @@ public static double defaultBugRate = 100;
       return  salary + fixedBugs * defaultBugRate;
     }
 
+
+
+
     @Override
     public String toString() {
         return "Employee: " +
@@ -116,4 +120,6 @@ public static double defaultBugRate = 100;
     public int hashCode() {
         return Objects.hash(id, name, age, salary, gender, fixedBugs);
     }
+
+
 }
