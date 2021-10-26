@@ -89,9 +89,9 @@ public class ArrayQueueTest extends TestCase {
     @Test
     public void testOverFlow() {
         ArrayQueue arrayQueue = new ArrayQueue(1);
-        assertEquals(1, arrayQueue.size());
+        assertEquals(0, arrayQueue.size());
         arrayQueue.enqueue("A");
-        assertEquals(2, arrayQueue.size());
+        assertEquals(1, arrayQueue.size());
     }
 
     //A->B->C...head->...->tail

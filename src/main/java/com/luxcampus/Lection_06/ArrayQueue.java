@@ -10,7 +10,6 @@ public class ArrayQueue implements Queue {
 
     public ArrayQueue(int initialCapacity) {
         array = new Object[initialCapacity];
-        size = initialCapacity;
     }
 
     @Override
