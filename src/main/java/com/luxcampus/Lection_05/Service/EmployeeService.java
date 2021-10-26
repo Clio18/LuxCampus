@@ -1,6 +1,6 @@
-package Lection_05;
+package com.luxcampus.Lection_05.Service;
 
-import Lection_05.Entity.Employee;
+import com.luxcampus.Lection_05.Entity.Employee;
 
 public class EmployeeService {
 

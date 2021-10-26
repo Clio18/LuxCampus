@@ -1,6 +1,6 @@
-package Lection_05.Entity;
+package com.luxcampus.Lection_05.Entity;
 
-import Lection_05.Data.Gender;
+import com.luxcampus.Lection_05.Data.Gender;
 
 public class Manager extends Employee {
 

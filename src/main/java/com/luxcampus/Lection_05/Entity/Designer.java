@@ -1,10 +1,10 @@
-package Lection_05.Entity;
+package com.luxcampus.Lection_05.Entity;
 
-import Lection_05.Data.Gender;
+import com.luxcampus.Lection_05.Data.Gender;
 
 public class Designer extends Employee {
    private double rate;
-   public int workedDays;
+   private int workedDays;
 
     public Designer(long id, String name, int age, double salary,
                     Gender gender, double rate, int workedDays) {
@@ -12,6 +12,7 @@ public class Designer extends Employee {
         this.rate = rate;
         this.workedDays = workedDays;
     }
+
     @Override
     public double earn(){
         //ставка + rate * workedDays

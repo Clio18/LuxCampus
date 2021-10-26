@@ -1,8 +1,6 @@
-package Lection_05.Entity;
+package com.luxcampus.Lection_05.Entity;
 
-import Lection_05.Data.Gender;
-
-import java.util.Random;
+import com.luxcampus.Lection_05.Data.Gender;
 
 public class Developer extends Employee {
     //this coefficient established the raising of the salary

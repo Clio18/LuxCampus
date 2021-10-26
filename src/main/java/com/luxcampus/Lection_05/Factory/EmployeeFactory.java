@@ -1,11 +1,11 @@
-package Lection_05;
+package com.luxcampus.Lection_05.Factory;
 
-import Lection_05.Data.Gender;
-import Lection_05.Data.NameSource;
-import Lection_05.Entity.Designer;
-import Lection_05.Entity.Developer;
-import Lection_05.Entity.Employee;
-import Lection_05.Entity.Manager;
+import com.luxcampus.Lection_05.Data.Gender;
+import com.luxcampus.Lection_05.Data.NameSource;
+import com.luxcampus.Lection_05.Entity.Designer;
+import com.luxcampus.Lection_05.Entity.Developer;
+import com.luxcampus.Lection_05.Entity.Employee;
+import com.luxcampus.Lection_05.Entity.Manager;
 
 import java.util.Random;
 

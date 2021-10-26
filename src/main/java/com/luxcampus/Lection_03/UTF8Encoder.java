@@ -1,4 +1,4 @@
-package Lection_03;
+package com.luxcampus.Lection_03;
 
 import java.util.Arrays;
 

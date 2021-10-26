@@ -1,8 +1,7 @@
-package Lection_05.Entity;
+package com.luxcampus.Lection_05.Entity;
 
-import Lection_05.Data.Gender;
+import com.luxcampus.Lection_05.Data.Gender;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Employee {

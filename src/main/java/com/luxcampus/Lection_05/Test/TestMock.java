@@ -1,8 +1,14 @@
-package Lection_04;
+package com.luxcampus.Lection_05.Test;
+
+import com.luxcampus.Lection_05.Factory.EmployeeFactory;
+import com.luxcampus.Lection_05.Service.EmployeeService;
+import com.luxcampus.Lection_05.Entity.Employee;
+import com.luxcampus.Lection_05.Entity.Manager;
+import com.luxcampus.Lection_05.Data.Gender;
 
 import java.util.Arrays;
 
-public class Test {
+public class TestMock {
     public static void main(String[] args) {
         EmployeeFactory employeeFactory = new EmployeeFactory();
         EmployeeService employeeService = new EmployeeService(employeeFactory.generateDefaultEmployees());
@@ -18,26 +24,39 @@ public class Test {
         expectedEmployee.setId(2);
         assertEquals("getById", actualEmployee, expectedEmployee);
 
-        Employee [] actualEmployeeByName = employeeService.getByName("Ab");
+        Employee[] actualEmployeeByName = employeeService.getByName("Ab");
         assertEquals("getByName", actualEmployeeByName[0], expectedEmployee);
 
-        employeeService.sortByName();
-        Employee [] expectedEmployees = new Employee[]{
-                new Employee("Aa"),
-                new Employee("Aa"),
-                new Employee("Ab"),
-                new Employee("Ac"),
+        Employee[] expectedEmployeesWithOne = new Employee[]{
+                new Employee(1, "Aa", 22, 5000, Gender.MALE, 11),
+                new Employee(2, "Ab", 22, 5000, Gender.FEMALE, 11),
+                new Employee(3, "Ac", 22, 5000, Gender.FEMALE, 11),
+                new Employee(4, "Aa", 22, 15000, Gender.MALE, 11),
+                new Manager(5, "CC", 22, 777.9, Gender.MALE),
         };
-        assertEqualsArray("sortByName", employeeService.employees, expectedEmployees);
+        Manager manager = new Manager(5, "CC", 22, 777.9, Gender.MALE);
+        employeeService.add(manager);
+        assertEqualsArray("add", employeeService.employees, expectedEmployeesWithOne);
+        employeeService.remove(5);
 
-        employeeService.sortByNameAndSalary();
-        Employee [] expectedEmployeesNameAndSalary = new Employee[]{
-                new Employee("Aa", 15000),
-                new Employee("Aa", 5000),
-                new Employee("Ab", 5000),
-                new Employee("Ac", 5000),
+        Employee[] actualEmployees = employeeService.sortByName();
+        Employee[] expectedEmployees = new Employee[]{
+                new Employee(1, "Aa", 22, 5000, Gender.MALE, 11),
+                new Employee(4, "Aa", 22, 15000, Gender.MALE, 11),
+                new Employee(2, "Ab", 22, 5000, Gender.FEMALE, 11),
+                new Employee(3, "Ac", 22, 5000, Gender.FEMALE, 11),
+
         };
-        assertEqualsArrayNameAndSalary("sortByNameAndSalary", employeeService.employees, expectedEmployeesNameAndSalary);
+        assertEqualsArray("sortByName", actualEmployees, expectedEmployees);
+
+        Employee[] actualEmployeesNameAndSalary = employeeService.sortByNameAndSalary();
+        Employee[] expectedEmployeesNameAndSalary = new Employee[]{
+                new Employee(4, "Aa", 22, 15000, Gender.MALE, 11),
+                new Employee(1, "Aa", 22, 5000, Gender.MALE, 11),
+                new Employee(2, "Ab", 22, 5000, Gender.FEMALE, 11),
+                new Employee(3, "Ac", 22, 5000, Gender.FEMALE, 11),
+        };
+        assertEqualsArrayNameAndSalary("sortByNameAndSalary", actualEmployeesNameAndSalary, expectedEmployeesNameAndSalary);
 
         Employee employee = new Employee(1, "TOMMY", 89, 7777.00, Gender.MALE, 9);
         employeeService.edit(employee);
@@ -45,16 +64,15 @@ public class Test {
         assertEquals("edit", actualNewEmployee, employee);
 
         employeeService.remove(1);
-        Employee [] expectedEmployeesUpdated = new Employee[]{
-                new Employee("Aa", 15000),
-                new Employee("Ab", 5000),
-                new Employee("Ac", 5000),
+        Employee[] expectedEmployeesUpdated = new Employee[]{
+                new Employee(2, "Ab", 22, 5000, Gender.FEMALE, 11),
+                new Employee(3, "Ac", 22, 5000, Gender.FEMALE, 11),
+                new Employee(4, "Aa", 22, 15000, Gender.MALE, 11),
         };
         assertEqualsArrayNameAndSalary("removed", employeeService.employees, expectedEmployeesUpdated);
 
-
     }
-    static void assertEquals(String testId, double actual, double expected) {
+    private static void assertEquals(String testId, double actual, double expected) {
         if (expected == actual) {
             System.out.println("TEST " + testId + " PASSED");
         } else {
@@ -62,7 +80,7 @@ public class Test {
                     expected + " Actual: " + actual);
         }
     }
-    static void assertEquals(String testId, Employee actual, Employee expected) {
+    private static void assertEquals(String testId, Employee actual, Employee expected) {
         if (expected.equals(actual)) {
             System.out.println("TEST " + testId + " PASSED");
         } else {
@@ -70,7 +88,7 @@ public class Test {
                     expected + " Actual: " + actual);
         }
     }
-    static void assertEqualsArray(String testId, Employee[] actual, Employee[] expected) {
+    private static void assertEqualsArray(String testId, Employee[] actual, Employee[] expected) {
         int count = 0;
             for (int i = 0; i < actual.length; i++) {
                 if (actual[i].getName().equals(expected[i].getName())) {
@@ -87,7 +105,7 @@ public class Test {
                 System.out.println(Arrays.toString(actual));
             }
         }
-    static void assertEqualsArrayNameAndSalary(String testId, Employee[] actual, Employee[] expected) {
+   private static void assertEqualsArrayNameAndSalary(String testId, Employee[] actual, Employee[] expected) {
         int count = 0;
         for (int i = 0; i < actual.length; i++) {
             if (actual[i].getName().equals(expected[i].getName())&&actual[i].getSalary()==expected[i].getSalary()) {

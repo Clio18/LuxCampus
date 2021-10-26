@@ -1,14 +1,8 @@
-package Lection_05.Test;
-
-import Lection_05.EmployeeFactory;
-import Lection_05.EmployeeService;
-import Lection_05.Entity.Employee;
-import Lection_05.Entity.Manager;
-import Lection_05.Data.Gender;
+package com.luxcampus.Lection_04;
 
 import java.util.Arrays;
 
-public class TestMock {
+public class Test {
     public static void main(String[] args) {
         EmployeeFactory employeeFactory = new EmployeeFactory();
         EmployeeService employeeService = new EmployeeService(employeeFactory.generateDefaultEmployees());
@@ -24,39 +18,26 @@ public class TestMock {
         expectedEmployee.setId(2);
         assertEquals("getById", actualEmployee, expectedEmployee);
 
-        Employee[] actualEmployeeByName = employeeService.getByName("Ab");
+        Employee [] actualEmployeeByName = employeeService.getByName("Ab");
         assertEquals("getByName", actualEmployeeByName[0], expectedEmployee);
 
-        Employee[] expectedEmployeesWithOne = new Employee[]{
-                new Employee(1, "Aa", 22, 5000, Gender.MALE, 11),
-                new Employee(2, "Ab", 22, 5000, Gender.FEMALE, 11),
-                new Employee(3, "Ac", 22, 5000, Gender.FEMALE, 11),
-                new Employee(4, "Aa", 22, 15000, Gender.MALE, 11),
-                new Manager(5, "CC", 22, 777.9, Gender.MALE),
+        employeeService.sortByName();
+        Employee [] expectedEmployees = new Employee[]{
+                new Employee("Aa"),
+                new Employee("Aa"),
+                new Employee("Ab"),
+                new Employee("Ac"),
         };
-        Manager manager = new Manager(5, "CC", 22, 777.9, Gender.MALE);
-        employeeService.add(manager);
-        assertEqualsArray("add", employeeService.employees, expectedEmployeesWithOne);
-        employeeService.remove(5);
+        assertEqualsArray("sortByName", employeeService.employees, expectedEmployees);
 
-        Employee[] actualEmployees = employeeService.sortByName();
-        Employee[] expectedEmployees = new Employee[]{
-                new Employee(1, "Aa", 22, 5000, Gender.MALE, 11),
-                new Employee(4, "Aa", 22, 15000, Gender.MALE, 11),
-                new Employee(2, "Ab", 22, 5000, Gender.FEMALE, 11),
-                new Employee(3, "Ac", 22, 5000, Gender.FEMALE, 11),
-
+        employeeService.sortByNameAndSalary();
+        Employee [] expectedEmployeesNameAndSalary = new Employee[]{
+                new Employee("Aa", 15000),
+                new Employee("Aa", 5000),
+                new Employee("Ab", 5000),
+                new Employee("Ac", 5000),
         };
-        assertEqualsArray("sortByName", actualEmployees, expectedEmployees);
-
-        Employee[] actualEmployeesNameAndSalary = employeeService.sortByNameAndSalary();
-        Employee[] expectedEmployeesNameAndSalary = new Employee[]{
-                new Employee(4, "Aa", 22, 15000, Gender.MALE, 11),
-                new Employee(1, "Aa", 22, 5000, Gender.MALE, 11),
-                new Employee(2, "Ab", 22, 5000, Gender.FEMALE, 11),
-                new Employee(3, "Ac", 22, 5000, Gender.FEMALE, 11),
-        };
-        assertEqualsArrayNameAndSalary("sortByNameAndSalary", actualEmployeesNameAndSalary, expectedEmployeesNameAndSalary);
+        assertEqualsArrayNameAndSalary("sortByNameAndSalary", employeeService.employees, expectedEmployeesNameAndSalary);
 
         Employee employee = new Employee(1, "TOMMY", 89, 7777.00, Gender.MALE, 9);
         employeeService.edit(employee);
@@ -64,12 +45,13 @@ public class TestMock {
         assertEquals("edit", actualNewEmployee, employee);
 
         employeeService.remove(1);
-        Employee[] expectedEmployeesUpdated = new Employee[]{
-                new Employee(2, "Ab", 22, 5000, Gender.FEMALE, 11),
-                new Employee(3, "Ac", 22, 5000, Gender.FEMALE, 11),
-                new Employee(4, "Aa", 22, 15000, Gender.MALE, 11),
+        Employee [] expectedEmployeesUpdated = new Employee[]{
+                new Employee("Aa", 15000),
+                new Employee("Ab", 5000),
+                new Employee("Ac", 5000),
         };
         assertEqualsArrayNameAndSalary("removed", employeeService.employees, expectedEmployeesUpdated);
+
 
     }
     static void assertEquals(String testId, double actual, double expected) {

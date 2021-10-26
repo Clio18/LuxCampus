@@ -1,4 +1,4 @@
-package Lection_02;
+package com.luxcampus.Lection_02;
 
 import java.util.Arrays;
 
@@ -6,37 +6,38 @@ public class CrystalMethods {
     public static void main(String[] args) {
 
         System.out.println("#1: ");
-        printArray(new char[]{'a', 'b'});
+        print(new char[]{'a', 'b'});
         System.out.println();
 
 
         char[] expectedCharArray = new char[]{'A', 'B', 'C'};
-        char[] actualCharArray = fromIntToChar(new int[]{65, 66, 67});
+        char[] actualCharArray = toChars(new int[]{65, 66, 67});
         assertEqualsArray("#2", actualCharArray, expectedCharArray);
 
         int expectedMax = 99;
-        int actualMax = biggerBetweenTwo(9, 99);
+        int actualMax = max(9, 99);
         assertEquals("#3", actualMax, expectedMax);
 
         int expectedMaxOfThree = 1000;
-        int actualMaxOfThree = biggerBetweenThree(9, 99, 1000);
+        int actualMaxOfThree = max(9, 99, 1000);
         assertEquals("#4", actualMax, expectedMax);
 
         int expectedMaxOfFive = 1000;
-        int actualMaxOfFive = biggerBetweenFive(9, 99, 1000, 1, 99);
+        int actualMaxOfFive = max(9, 99, 1000, 1, 99);
         assertEquals("#5", actualMax, expectedMax);
 
         String expectedString = "ABX";
-        String actualString = stringMaker(new char[]{'A', 'B', 'X'});
+        String actualString = toString(new char[]{'A', 'B', 'X'});
         assertEquals("#6", actualString, expectedString);
 
         int expectedIndex = 1;
-        int actualIndex = findIndex(new int[]{1, 2, 3, 4, 2, 6}, 2);
+        int actualIndex = indexOf(new int[]{1, 2, 3, 4, 2, 6}, 2);
         assertEquals("#8", actualMax, expectedMax);
 
         int expectedIndexFromEnd = 5;
-        int actualIndexFromEnd = findIndex(new int[]{1, 2, 3, 4, 2, 6}, 6);
+        int actualIndexFromEnd = indexFromEnd(new int[]{1, 2, 3, 4, 2, 6}, 6);
         assertEquals("#9", actualMax, expectedMax);
+
 
         long expectedFactorial = 6;
         long actualFactorial = factorial(3);
@@ -70,8 +71,8 @@ public class CrystalMethods {
         assertEqualsArray("#15", actualMultiArray, expectedMultiArray);
 
 
-        int[] concatenatedArray = concatArray(new int[]{5, 3, 7, 2, 5, 11}, new int[]{5, 6, 7, 9, 6, 22});
-        int[] actualIntArray = uniqueElement(concatenatedArray);
+        int[] concatenatedArray = concatenation(new int[]{5, 3, 7, 2, 5, 11}, new int[]{5, 6, 7, 9, 6, 22});
+        int[] actualIntArray = unique(concatenatedArray);
         int[] expectedIntArray = new int[]{2, 3, 9, 11, 22};
         int[] actualAsc = sortAscTest(actualIntArray);
         assertEqualsArray("#16", actualAsc, expectedIntArray);
@@ -80,13 +81,13 @@ public class CrystalMethods {
         int[] expectedReversed = new int[]{4, 3, 2, 1};
         assertEqualsArray("#17", actualReversed, expectedReversed);
 
-        int actualSize = createArray(5, 1, 10).length;
+        int actualSize = create(5, 1, 10).length;
         int expectedSize = 5;
         assertEquals("----------#18 Length of array : ", actualSize, expectedIndexFromEnd);
-        int actualMin = Arrays.stream(createArray(5, 1, 10)).min().getAsInt();
+        int actualMin = Arrays.stream(create(5, 1, 10)).min().getAsInt();
         int expectedMin = 0;
         assertEquals("----------#18 Minimum value in array : ", expectedMin < actualMin, true);
-        int actualMaximum = Arrays.stream(createArray(5, 1, 10)).max().getAsInt();
+        int actualMaximum = Arrays.stream(create(5, 1, 10)).max().getAsInt();
         int expectedMaximum = 11;
         assertEquals("----------#18 Maximum value in array : ", expectedMaximum > actualMaximum, true);
 
@@ -213,7 +214,7 @@ public class CrystalMethods {
     }
 
     //1) принимает массив чаров, выводит его на экран
-    static void printArray(char[] array) {
+    static void print(char[] array) {
         for (int i = 0; i < array.length; i++) {
             System.out.print(array[i] + " ");
         }
@@ -221,7 +222,7 @@ public class CrystalMethods {
 
     //2) принимает массив интов, возвращает массив чаров,
     // каждый символ в позиции массива соответствует коду символа передаваемого инта
-    static char[] fromIntToChar(int[] array) {
+    static char[] toChars(int[] array) {
         char[] arrayOfChar = new char[array.length];
         for (int i = 0; i < array.length; i++) {
             arrayOfChar[i] = (char) array[i];
@@ -230,7 +231,7 @@ public class CrystalMethods {
     }
 
     //3) приминает 2 инта, а и б, возвращает большее их этих 2х чисел
-    static int biggerBetweenTwo(int a, int b) {
+    static int max(int a, int b) {
         if (a > b) {
             return a;
         } else {
@@ -239,20 +240,20 @@ public class CrystalMethods {
     }
 
     //4) принимает 3 инта, возвращает большее из них
-    static int biggerBetweenThree(int a, int b, int c) {
-        int temp = biggerBetweenTwo(a, b);
-        return biggerBetweenTwo(temp, c);
+    static int max(int a, int b, int c) {
+        int temp = max(a, b);
+        return max(temp, c);
     }
 
     //5) приминает 5 интов, возвращает большее из них
-    static int biggerBetweenFive(int a, int b, int c, int d, int e) {
-        int first = biggerBetweenThree(a, b, c);
-        int second = biggerBetweenTwo(d, e);
-        return biggerBetweenTwo(first, second);
+    static int max(int a, int b, int c, int d, int e) {
+        int first = max(a, b, c);
+        int second = max(d, e);
+        return max(first, second);
     }
 
     //6) принимает массив чаров, возвращает строку состоящую из символов массива
-    static String stringMaker(char[] array) {
+    static String toString(char[] array) {
         String result = "";
         for (int i = 0; i < array.length; i++) {
             result = result + array[i];
@@ -263,7 +264,7 @@ public class CrystalMethods {
     //8) принимает массив интов, и значение типа инт,
     // возвращает индекс массива в котором значение совпадает с передаваемым,
     // начиная с начала массива. Если значения в массиве нет возвращает -1
-    static int findIndex(int[] array, int value) {
+    static int indexOf(int[] array, int value) {
         int result = -1;
         for (int i = 0; i < array.length; i++) {
             if (array[i] == value) {
@@ -276,7 +277,7 @@ public class CrystalMethods {
     //9) принимает массив интов, и значение типа инт,
     //* возвращает индекс массива в котором значение совпадает с передаваемым,
     //* начиная с конца массива. Если значения в массиве нет возвращает -1
-    static int findIndexFromEnd(int[] array, int value) {
+    static int indexFromEnd(int[] array, int value) {
         int result = -1;
         for (int i = 0; i < array.length; i++) {
             if (array[i] == value) {
@@ -405,7 +406,7 @@ public class CrystalMethods {
 
     //16) принимает два массива интов, возвращает массив из елементов которые не совпадают в массивах
     /* concatenate two arrays */
-    static int[] concatArray(int[] a, int[] b) {
+    static int[] concatenation(int[] a, int[] b) {
         int length = a.length + b.length;
         int c[] = new int[length];
         int size = b.length - 1;
@@ -421,7 +422,7 @@ public class CrystalMethods {
 
     }
 
-    static int[] uniqueElement(int[] array) {
+    static int[] unique(int[] array) {
         //find the size of the resulting array
         int size = 0;
         int elementCounter = 0;
@@ -470,7 +471,7 @@ public class CrystalMethods {
     //- верхняя граница
     //возвращает массив интов заданой длинный,
     //* который содержит случайные числа от нижней границы до верхней границы"
-    static int[] createArray(int size, int bottom, int up) {
+    static int[] create(int size, int bottom, int up) {
         int[] array = new int[size];
         for (int i = 0; i < size; i++) {
             array[i] = bottom + (int) (Math.random() * ((up - bottom) + 1));
@@ -482,15 +483,15 @@ public class CrystalMethods {
     //* проверяет есть ли в 1 массиве,
     //* такая же последовательность символов которую представляет собой второй массив.
     //* Возвращает булеан
-    static boolean ifContains(char[] a, char[] b) {
+    static boolean ifContains(char[] subChars, char[] chars) {
         boolean flag;
-        if (a.length > b.length) {
-            String first = stringMaker(a);
-            CharSequence charSequence = new StringBuffer(stringMaker(b));
+        if (subChars.length > chars.length) {
+            String first = toString(subChars);
+            CharSequence charSequence = new StringBuffer(toString(chars));
             flag = first.contains(charSequence);
         } else {
-            String first = stringMaker(b);
-            CharSequence charSequence = new StringBuffer(stringMaker(a));
+            String first = toString(chars);
+            CharSequence charSequence = new StringBuffer(toString(subChars));
             flag = first.contains(charSequence);
         }
         return flag;

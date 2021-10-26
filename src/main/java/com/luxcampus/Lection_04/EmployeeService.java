@@ -1,4 +1,4 @@
-package Lection_04;
+package com.luxcampus.Lection_04;
 
 public class EmployeeService {
 
