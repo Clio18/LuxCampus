@@ -1,4 +1,4 @@
-package Lection_05.Data;
+package com.luxcampus.Lection_04;
 
 public class NameSource {
     private String [] male;
