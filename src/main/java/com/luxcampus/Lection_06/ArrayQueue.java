@@ -45,13 +45,10 @@ public class ArrayQueue implements Queue {
             throw new IllegalStateException("Queue is empty!");
         }
         Object result = array[0];
-        size = size - 1;
-        Object[] newArr = new Object[size];
-        for (int i = 0; i < size; i++) {
-            newArr[i] = array[i + 1];
-
+        for (int i = 0; i < size-1; i++) {
+            array[i] = array[++i];
         }
-        array = newArr;
+        size--;
         return result;
     }
 
@@ -63,7 +60,11 @@ public class ArrayQueue implements Queue {
     @Override
     public boolean contains(Object value) {
         for (int i = 0; i < size; i++) {
-            if (value.equals(array[i])) {
+            if (value==null){
+                if (array[i] == null){
+                    return true;
+                }
+            } else if (value.equals(array[i])) {
                 return true;
             }
         }
@@ -72,6 +73,9 @@ public class ArrayQueue implements Queue {
 
     @Override
     public void clear() {
+        for (int i = 0; i < size; i++) {
+            array[i] = 0;
+        }
         size = 0;
     }
 
@@ -81,13 +85,14 @@ public class ArrayQueue implements Queue {
             return "[]";
         }
         String result = "";
+        StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < size; i++) {
-            result = result+array[i];
+            stringBuilder.append(array[i].toString());
             if(i<size-1){
-                result = result + ", ";
+                stringBuilder.append(", ");
             }
         }
-        return "["+ result+"]";
+        return "["+ stringBuilder.toString()+"]";
     }
 
 

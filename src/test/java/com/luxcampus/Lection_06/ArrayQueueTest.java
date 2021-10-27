@@ -22,6 +22,12 @@ public class ArrayQueueTest extends TestCase {
         assertEquals("A", arrayQueue.dequeue());
         assertEquals("B", arrayQueue.dequeue());
         assertEquals(0, arrayQueue.size());
+        arrayQueue.enqueue("A");
+        arrayQueue.enqueue("B");
+        assertEquals(2, arrayQueue.size());
+        assertEquals("A", arrayQueue.dequeue());
+        assertEquals("B", arrayQueue.dequeue());
+        assertEquals(0, arrayQueue.size());
         assertTrue(arrayQueue.isEmpty());
     }
 
@@ -73,6 +79,13 @@ public class ArrayQueueTest extends TestCase {
     }
 
     @Test
+    public void testContainsTrueIfNull() {
+        ArrayQueue arrayQueue = new ArrayQueue();
+        arrayQueue.enqueue(null);
+        assertTrue(arrayQueue.contains(null));
+    }
+
+    @Test
     public void testContainsFalse() {
         ArrayQueue arrayQueue = new ArrayQueue();
         arrayQueue.enqueue("A");
@@ -109,6 +122,7 @@ public class ArrayQueueTest extends TestCase {
     @Test
     public void testToStringOnEmpty() {
         ArrayQueue arrayQueue = new ArrayQueue();
+        assertEquals("[]", arrayQueue.toString());
         arrayQueue.enqueue("A");
         arrayQueue.enqueue("B");
         arrayQueue.clear();
