@@ -1,5 +1,7 @@
 package com.luxcampus.Lection_07;
 
+import java.util.StringJoiner;
+
 public class ArrayList implements List {
     private int size;
     private Object[] array;
@@ -12,16 +14,6 @@ public class ArrayList implements List {
         array = new Object[size];
     }
 
-    public void ensureCapacity() {
-        if (array.length == size) {
-            Object[] newArr = new Object[(3 * array.length) / 2];
-            for (int i = 0; i < array.length; i++) {
-                newArr[i] = array[i];
-            }
-            array = newArr;
-        }
-    }
-
     @Override
     public void add(Object value) {
         ensureCapacity();
@@ -31,15 +23,8 @@ public class ArrayList implements List {
 
     @Override
     public void add(Object value, int index) {
-        // if add in 0
         if (index < 0 || index > size) {
-            throw new ArrayIndexOutOfBoundsException("Wrong index!");
-        } else if (index == 0) {
-            for (int i = size; i > 0; i--) {
-                array[i] = array[i - 1];
-            }
-            array[0] = value;
-            size++;
+            throw new ArrayIndexOutOfBoundsException("Index should be in the range [0, size]");
         } else if (size == index) {
             array[index] = value;
             size++;
@@ -57,19 +42,13 @@ public class ArrayList implements List {
         Object result;
         // delete index 0
         if (index < 0 || index > size - 1) {
-            throw new ArrayIndexOutOfBoundsException("Wrong index!");
-        } else if (index == 0) {
-            result = array[0];
-            size--;
-            for (int i = 0; i < size; i++) {
-                array[i] = array[i + 1];
-            }
-        } else if (index == size - 1) {
+            throw new IllegalArgumentException("Index should be in the range [0, size-1]");
+        }
+        else if (index == size - 1) {
             result = array[size - 1];
             size--;
-            array[index] = 0;
+            array[index] = null;
         } else {
-            // delete index middle
             result = array[index];
             size--;
             for (int i = index; i < size; i++) {
@@ -99,7 +78,7 @@ public class ArrayList implements List {
     @Override
     public void clear() {
         for (int i = 0; i < size; i++) {
-            array[i] = 0;
+            array[i] = null;
         }
         size = 0;
     }
@@ -161,14 +140,20 @@ public class ArrayList implements List {
         if(isEmpty()){
             return "[]";
         }
-        String result = "";
-        StringBuilder stringBuilder = new StringBuilder();
+        StringJoiner stringJoiner = new StringJoiner(", ", "[", "]");
         for (int i = 0; i < size; i++) {
-            stringBuilder.append(array[i].toString());
-            if(i<size-1){
-                stringBuilder.append(", ");
-            }
+            stringJoiner.add(array[i].toString());
         }
-        return "["+ stringBuilder.toString()+"]";
+        return stringJoiner.toString();
+    }
+
+    private void ensureCapacity() {
+        if (array.length == size) {
+            Object[] newArr = new Object[(3 * array.length) / 2];
+            for (int i = 0; i < array.length; i++) {
+                newArr[i] = array[i];
+            }
+            array = newArr;
+        }
     }
 }

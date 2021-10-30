@@ -1,13 +1,15 @@
 package com.luxcampus.Lection_07;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayListTest {
+    @DisplayName("Test add 2 elements to empty list and remove twice from 0 index")
     @Test
-    void testAddAndRemoveAndContains() {
+    void testAddToEmptyTwoElementsAndRemoveTwiceByZeroIndex() {
         ArrayList list = new ArrayList();
         list.add("a");
         list.add("b");
@@ -17,9 +19,18 @@ class ArrayListTest {
         assertTrue(list.contains("b"));
         list.remove(0);
         assertTrue(list.isEmpty());
+    }
+    @DisplayName("Test if contains null on empty list and adding null to list")
+    @Test
+    void testContainsNullAtEmptyAndAddNull() {
+        ArrayList list = new ArrayList();
+        assertTrue(list.isEmpty());
+        assertFalse(list.contains(null));
         list.add(null);
         assertTrue(list.contains(null));
     }
+
+    @DisplayName("Test remove from beginning and end")
     @Test
     void testRemoveFromStartAndEnd(){
         ArrayList list = new ArrayList();
@@ -32,10 +43,11 @@ class ArrayListTest {
         list.remove(13);
         assertEquals(13, list.size());
         assertFalse(list.contains(14));
-        Assertions.assertThrows(ArrayIndexOutOfBoundsException.class, ()->{
+        Assertions.assertThrows(IllegalArgumentException.class, ()->{
             list.remove(16);
         });
     }
+    @DisplayName("Test remove from 1 to size-1 index")
     @Test
     void testRemoveFromMiddle(){
         ArrayList list = new ArrayList();
@@ -46,6 +58,7 @@ class ArrayListTest {
         assertEquals(14, list.size());
         assertFalse(list.contains(10));
     }
+    @DisplayName("Test add and remove with capacity ensuring")
     @Test
     void testAddAndRemoveAndCapacity() {
         ArrayList list = new ArrayList();
@@ -58,6 +71,7 @@ class ArrayListTest {
         }
         assertEquals(0, list.size());
     }
+    @DisplayName("Test add by index and verify content")
     @Test
     void testAddByIndex() {
         ArrayList list = new ArrayList();
@@ -83,6 +97,20 @@ class ArrayListTest {
         });
         assertEquals(8, list.size());
     }
+    @DisplayName("Test add by index which is out of size must be exception")
+    @Test
+    void testAddByIndexOutOfSize() {
+        ArrayList list = new ArrayList();
+        for (int i = 0; i < 5; i++) { //[0, 1, 2, 3, 4,....]
+            list.add(i);
+        }
+        Assertions.assertThrows(ArrayIndexOutOfBoundsException.class, ()->{
+            list.add(400, 9); //[100, 0, 1, 2, 3, 1000, 4, 300....]
+        });
+        assertEquals(5, list.size());
+    }
+
+    @DisplayName("Test add by index and remove by index")
     @Test
     void testAddByIndAndRemoveByInd(){
         ArrayList arrayList = new ArrayList();
@@ -93,6 +121,7 @@ class ArrayListTest {
         assertEquals(1, arrayList.size());
         assertFalse(arrayList.contains(100));
     }
+    @DisplayName("Test get and set element")
     @Test
     void testGetAndSet(){
         ArrayList arrayList = new ArrayList();
@@ -103,6 +132,7 @@ class ArrayListTest {
         assertEquals(2, arrayList.set(100, 2));
         assertEquals(100, arrayList.get(2));
     }
+    @DisplayName("Test set method after clear")
     @Test
     void testSetAfterClear(){
         ArrayList arrayList = new ArrayList();
@@ -117,6 +147,7 @@ class ArrayListTest {
             arrayList.set(100, 0);
         });
     }
+    @DisplayName("Test index of first, last and not presented elements")
     @Test
     void testIndexOf(){
         ArrayList arrayList = new ArrayList();
@@ -127,8 +158,9 @@ class ArrayListTest {
         assertEquals(4, arrayList.indexOf(arrayList.size()-1));
         assertEquals(-1, arrayList.indexOf(arrayList.size()));
     }
+    @DisplayName("Test last index of if list contains the same elements")
     @Test
-    void testLastIndexOf(){
+    void testLastIndexOfElementsIfTheyMoreThanOne(){
         ArrayList arrayList = new ArrayList();
         arrayList.add(1); //0
         arrayList.add(100);
@@ -139,29 +171,46 @@ class ArrayListTest {
         arrayList.remove(4);
         assertEquals(3, arrayList.lastIndexOf(100));
     }
-    @Test
-    void testIndexOfAndLastIndexOf(){
-        ArrayList arrayList = new ArrayList();
-        for (int i = 0; i < 5; i++) {
-            arrayList.add(100);
-        }
-        assertEquals(0, arrayList.indexOf(100));
-        assertEquals(-1, arrayList.indexOf(200));
-        assertEquals(4, arrayList.lastIndexOf(100));
-        assertEquals(-1, arrayList.lastIndexOf(200));
 
-    }
+    @DisplayName("Test toString method on not empty list")
     @Test
-    void testToSting(){
+    void testToStingOnNotEmpty(){
         ArrayList arrayList = new ArrayList();
         for (int i = 0; i < 3; i++) {
             arrayList.add(100);
         }
         assertEquals("[100, 100, 100]", arrayList.toString());
+    }
+
+    @DisplayName("Test toString method on empty list")
+    @Test
+    void testToStingOnEmpty(){
+        ArrayList arrayList = new ArrayList();
+        assertEquals("[]", arrayList.toString());
+    }
+    @DisplayName("Test toString method after clear method")
+    @Test
+    void testToStingAfterClear(){
+        ArrayList arrayList = new ArrayList();
+        for (int i = 0; i < 3; i++) {
+            arrayList.add(100);
+        }
         arrayList.clear();
         assertEquals("[]", arrayList.toString());
-
     }
+    @DisplayName("Test toString method after remove all")
+    @Test
+    void testToStingAfterRemoveAll(){
+        ArrayList arrayList = new ArrayList();
+        for (int i = 0; i < 3; i++) {
+            arrayList.add(100);
+        }
+        for (int i = 0; i < 3; i++) {
+            arrayList.remove(0);
+        }
+        assertEquals("[]", arrayList.toString());
+    }
+
 
 
 }
