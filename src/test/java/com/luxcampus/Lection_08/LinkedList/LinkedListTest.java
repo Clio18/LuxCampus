@@ -1,8 +1,7 @@
-package com.luxcampus.Lection_08;
+package com.luxcampus.Lection_08.LinkedList;
 
+import com.luxcampus.Lection_08.LinkedList.LinkedList;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 

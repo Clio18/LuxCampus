@@ -1,4 +1,4 @@
-package com.luxcampus.Lection_08;
+package com.luxcampus.Lection_08.LinkedList;
 
 // Abstract Data Type
 public interface List {
