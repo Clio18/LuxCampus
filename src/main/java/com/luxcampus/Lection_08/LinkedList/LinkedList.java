@@ -1,25 +1,27 @@
 package com.luxcampus.Lection_08.LinkedList;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 public class LinkedList implements List {
-   private int size;
-   private Node first;
-   private Node last;
+    private int size;
+    private Node head;
+    private Node tail;
 
     @Override
-    public void add(Object value)  {
+    public void add(Object value) {
         //first Node has value = null, next = null, prev = null
-        if (first == null) {
+        if (head == null) {
             //its will be a head and tail in the same time, first element
             Node newNode = new Node(value, null, null);
-            first = newNode;
-            last = newNode;
+            head = newNode;
+            tail = newNode;
         } else {
             //it not the first, so its previous is last and next is null
-            Node newNode = new Node(value, last, null);
+            Node newNode = new Node(value, tail, null);
             //Node last: some value, some prev, next -> newNode
-            last.next = newNode;
+            tail.next = newNode;
             //and newNode become last Node
-            last = newNode;
+            tail = newNode;
         }
         size++;
 
@@ -27,28 +29,36 @@ public class LinkedList implements List {
 
     @Override
     public void add(Object value, int index) {
-        if (index < 0 || index >= size) {
+        if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException();
         } else if (index == 0) {
-            add(value);
+            if (head == null) {
+                add(value);
+            } else {
+                Node firstNew = new Node(value, null, head);
+                head.previous = firstNew;
+                head = firstNew;
+                size++;
+            }
         } else if (index == size) {
             //adding to the end, tail has: value, previous = last, next = null
-            Node newNode = new Node(value, last, null);
+            Node newNode = new Node(value, tail, null);
             //old tail now has next is newNode
-            last.next = newNode;
+            tail.next = newNode;
             //newNode now is a tail
-            last = newNode;
+            tail = newNode;
+            size++;
         } else {
             //insert between a and b
-            Node a = null;
+            Node current = null;
             for (int i = 0; i < size; i++) {
-                a = first.next;
+                current = head.next;
             }
-            Node b = a.next;
+            Node b = current.next;
             // newNode will be between a and b, so prev will be a, next will be b
-            Node node = new Node(value, a, b);
+            Node node = new Node(value, current, b);
             //a change its next to node
-            a.next = node;
+            current.next = node;
             //b change its prev to node
             b.previous = node;
             size++;
@@ -58,46 +68,71 @@ public class LinkedList implements List {
 
     @Override
     public Object remove(int index) {
-        Object obj = null;
+        Object object = null;
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
-        } else if (index==0){
-            obj = first;
-            first = first.next;
+        } else if (index == 0) {
+            object = head;
+            head = head.next;
             size--;
-        } else if (index==size-1){
-            last = last.previous;
+        } else if (index == size - 1) {
+            tail = tail.previous;
             size--;
         } else {
-            Node a = first;
-            for (int i = 0; i < index-1; i++) {
-                a = a.next;
+            Node current = head;
+            for (int i = 0; i < index - 1; i++) {
+                current = current.next;
             }
-            Node rem = a.next;
-            obj = rem;
-            a.next = rem.next;
-            Node prev = rem.previous;
-            prev.previous = a;
+            Node removed = current.next;
+            object = removed;
+            current.next = removed.next;
+            Node previous = removed.previous;
+            previous.previous = current;
             size--;
         }
-        return obj;
+        return object;
     }
 
 
     @Override
     public Object get(int index) {
-        return null;
+        Object result = null;
+        if (index < 0 || index > size - 1) {
+            throw new IllegalArgumentException("Wrong index!");
+        } else if (index == 0) {
+            result = head.value;
+        } else if (index == size - 1) {
+            result = tail.value;
+        } else {
+            Node current = head;
+            for (int i = 0; i < index; i++) {
+                current = current.next;
+            }
+            result = current.value;
+        }
+        return result;
     }
 
     @Override
     public Object set(Object value, int index) {
-        return null;
+        Object result = null;
+        if (index < 0 || index > size - 1) {
+            throw new IllegalArgumentException("Wrong index!");
+        } else {
+            result = get(index);
+            Node current = head;
+            for (int i = 0; i < index; i++) {
+                current = current.next;
+            }
+            current.value = value;
+        }
+        return result;
     }
 
     @Override
     public void clear() {
-        first = null;
-        last = null;
+        head = null;
+        tail = null;
         size = 0;
     }
 
@@ -108,37 +143,56 @@ public class LinkedList implements List {
 
     @Override
     public boolean isEmpty() {
-        return size == 0;
+        return head == null;
     }
 
     @Override
     public boolean contains(Object value) {
-        boolean result = false;
-        if (value==null) {
-            throw new IndexOutOfBoundsException();
-        } else{
-            if (first.value.equals(value) || last.value.equals(value)){
-                result = true;
-            } else {
-              Node a = first;
-                for (int i = 0; i < size-1; i++) {
-                    if (a.value.equals(value)){
-                        result = true;
-                    }
-                    a = a.next;
-                }
+        return indexOf(value)!=-1;
+    }
+
+    @Override
+    public int indexOf(Object value) {
+        int result = -1;
+        Node current = head;
+        for (int i = 0; i < size; i++) {
+            /*
+            we should use Objects.equals() if the value might be null
+            method equals() cannot be apply to the null
+             */
+            if (Objects.equals(current.value, value)) {
+                result = i;
             }
+            current = current.next;
         }
         return result;
     }
 
     @Override
-    public int indexOf(Object value) {
-        return 0;
+    public int lastIndexOf(Object value) {
+        int result = -1;
+        Node current = head;
+        for (int i = 0; i < size; i++) {
+            if (current.value.equals(value)) {
+                result = i;
+                continue;
+            }
+            current = current.next;
+        }
+        return result;
     }
 
     @Override
-    public int lastIndexOf(Object value) {
-        return 0;
+    public String toString() {
+        if (isEmpty()) {
+            return "[]";
+        }
+        StringJoiner stringJoiner = new StringJoiner(", ", "[", "]");
+        Node current = head;
+        for (int i = 0; i < size; i++) {
+            stringJoiner.add(current.value.toString());
+            current = current.next;
+        }
+        return stringJoiner.toString();
     }
 }
