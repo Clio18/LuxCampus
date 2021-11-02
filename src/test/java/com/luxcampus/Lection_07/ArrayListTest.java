@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayListTest {
+    public ArrayListTest() {
+    }
+
     @DisplayName("Test add 2 elements to empty list and remove twice from 0 index")
     @Test
     void testAddToEmptyTwoElementsAndRemoveTwiceByZeroIndex() {
