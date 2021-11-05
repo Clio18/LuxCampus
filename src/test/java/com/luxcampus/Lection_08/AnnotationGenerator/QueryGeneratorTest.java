@@ -29,8 +29,8 @@ class QueryGeneratorTest {
         person.setSalary(1000.0);
 
         String getAllSql = queryGenerator.insert(person);
-        String expectedSql = "INSERT INTO persons (id, person_name, salary) VALUES (" + person.getId() +
-                ", " + person.getName() + ", " + person.getSalary() + ");";
+        String expectedSql = "INSERT INTO persons (id, person_name, salary) VALUES (" + "'" + person.getId() + "', "
+                + "'" + person.getName() + "', " + "'" + person.getSalary() + "'" + ");";
         assertEquals(expectedSql, getAllSql);
     }
 
@@ -52,8 +52,9 @@ class QueryGeneratorTest {
         person.setName("Tom");
         person.setSalary(1000.0);
         String getAllSql = queryGenerator.update(person);
+        //Where smth = smth;
         String expectedSql = "UPDATE persons SET person_name = " +
-                person.getName() + ", salary = " + person.getSalary() + " WHERE id = " + person.getId() + ";";
+                "'" + person.getName() + "'" + ", salary = " + "'" + person.getSalary() + "'" + " WHERE id = " + "'" + person.getId() + "'"+ ";";
 
         assertEquals(expectedSql, getAllSql);
     }
@@ -74,7 +75,7 @@ class QueryGeneratorTest {
         Person person = new Person();
         person.setId(100);
         String getAllSql = queryGenerator.getById(Person.class, 100);
-        String expectedSql = "SELECT id, person_name, salary FROM persons WHERE id = " + person.getId() + ";";
+        String expectedSql = "SELECT id, person_name, salary FROM persons WHERE id = " + "'" + person.getId() + "'" + ";";
         assertEquals(expectedSql, getAllSql);
     }
 
@@ -94,7 +95,7 @@ class QueryGeneratorTest {
         Person person = new Person();
         person.setId(100);
         String getAllSql = queryGenerator.delete(Person.class, 100);
-        String expectedSql = "DELETE FROM persons WHERE id = " + person.getId() + ";";
+        String expectedSql = "DELETE FROM persons WHERE id = " + "'" + person.getId() + "'" + ";";
         assertEquals(expectedSql, getAllSql);
     }
 

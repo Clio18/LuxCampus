@@ -1,6 +1,7 @@
 package com.luxcampus.Lection_08.AnnotationGenerator;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -46,7 +47,7 @@ public class QueryGenerator {
                 String columnName = columnAnnotation.name().isEmpty() ? field.getName() : columnAnnotation.name();
                 stringJoiner.add(columnName);
                 field.setAccessible(true);
-                stringJoiner2.add(field.get(value).toString());
+                stringJoiner2.add("'" + field.get(value).toString() + "'");
             }
         }
 
@@ -87,17 +88,17 @@ public class QueryGenerator {
             //each time new string "field_name = field_value" will be created
             StringBuilder stringBuilder2 = new StringBuilder();
             if (columnAnnotation != null) {
-                if (!field.getName().equals("id")) {
+                if (field.getAnnotation(Id.class)==null) {
                     String columnName = columnAnnotation.name().isEmpty() ? field.getName() : columnAnnotation.name();
                     field.setAccessible(true);
-                    stringBuilder2.append(columnName + " = ");
-                    stringBuilder2.append(field.get(value).toString());
+                    stringBuilder2.append(columnName + " = "+ "'");
+                    stringBuilder2.append(field.get(value).toString() + "'");
                     stringJoiner2.add(stringBuilder2.toString());
                 } else {
                     String columnName = columnAnnotation.name().isEmpty() ? field.getName() : columnAnnotation.name();
                     field.setAccessible(true);
-                    stringBuilder3.append(columnName + " = ");
-                    stringBuilder3.append(field.get(value).toString());
+                    stringBuilder3.append(columnName + " = " + "'");
+                    stringBuilder3.append(field.get(value).toString()+ "'");
                 }
             }
         }
@@ -132,7 +133,7 @@ public class QueryGenerator {
         stringBuilder.append(stringJoiner);
         stringBuilder.append(" FROM ");
         stringBuilder.append(tableName);
-        stringBuilder.append(" WHERE id = " + id.toString());
+        stringBuilder.append(" WHERE id = " + "'" + id.toString() + "'");
         stringBuilder.append(";");
         return stringBuilder.toString();
     }
@@ -146,7 +147,7 @@ public class QueryGenerator {
 
         String tableName = getTableName(clazz);
         stringBuilder.append(tableName);
-        stringBuilder.append(" WHERE id = " + id.toString());
+        stringBuilder.append(" WHERE id = " + "'" + id.toString() + "'");
         stringBuilder.append(";");
         return stringBuilder.toString();
     }

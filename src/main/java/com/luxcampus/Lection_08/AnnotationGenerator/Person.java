@@ -1,10 +1,12 @@
 package com.luxcampus.Lection_08.AnnotationGenerator;
 import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Table(name = "persons")
 public class Person {
 
+    @Id
     @Column
     private int id;
     @Column(name = "person_name")
