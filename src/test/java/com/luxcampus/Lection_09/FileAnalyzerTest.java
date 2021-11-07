@@ -1,5 +1,7 @@
 package com.luxcampus.Lection_09;
 
+import com.luxcampus.Lection_09.FileAnalyzer.FileAnalyzer;
+import com.luxcampus.Lection_09.FileAnalyzer.Pattern;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

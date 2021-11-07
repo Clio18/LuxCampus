@@ -1,4 +1,4 @@
-package com.luxcampus.Lection_09;
+package com.luxcampus.Lection_09.FileAnalyzer;
 
 public class Pattern {
    private int [] array;

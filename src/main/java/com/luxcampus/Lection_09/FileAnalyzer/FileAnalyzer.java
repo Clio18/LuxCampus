@@ -1,4 +1,4 @@
-package com.luxcampus.Lection_09;
+package com.luxcampus.Lection_09.FileAnalyzer;
 
 import com.luxcampus.Lection_07.ArrayList;
 import com.luxcampus.Lection_07.List;
