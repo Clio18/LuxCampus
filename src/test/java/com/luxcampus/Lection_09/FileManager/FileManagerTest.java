@@ -1,5 +1,7 @@
 package com.luxcampus.Lection_09.FileManager;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,32 +18,64 @@ class FileManagerTest {
     String notExist = "/Users/antonobolonik/Downloads/TEST1";
     String empty = "/Users/antonobolonik/Downloads/TEST3";
 
-//    public static void main(String[] args) throws IOException {
-//        //files - 6, folders - 3
-//        File path = new File("/Users/antonobolonik/Downloads/TEST");
-//        path.mkdir();
-//        File path1 = new File("/Users/antonobolonik/Downloads/TEST/file1.txt");
-//        path1.createNewFile();
-//        File path2 = new File("/Users/antonobolonik/Downloads/TEST/file2.txt");
-//        path2.createNewFile();
-//        File path3 = new File("/Users/antonobolonik/Downloads/TEST/file3.txt");
-//        path3.createNewFile();
-//        File path4 = new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST");
-//        path4.mkdir();
-//        File path5 = new File("/Users/antonobolonik/Downloads/TEST//INNER_TEST/file4.txt");
-//        path5.createNewFile();
-//        File path6 = new File("/Users/antonobolonik/Downloads/TEST//INNER_TEST/file5.txt");
-//        path6.createNewFile();
-//        File path7 = new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER");
-//        path7.mkdir();
-//        File path8 = new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER/file6.txt");
-//        path8.createNewFile();
-//
-//        //empty dir
-//        File path9 = new File("/Users/antonobolonik/Downloads/TEST3");
-//        path9.mkdir();
-//        System.out.println("DATA STRUCTURE IS READY FOR TEST");
-//    }
+
+    @Before
+    @Test
+    void init() throws IOException {
+        //files - 6, folders - 3
+        File path = new File("/Users/antonobolonik/Downloads/TEST");
+        path.mkdir();
+        File path1 = new File("/Users/antonobolonik/Downloads/TEST/file1.txt");
+        path1.createNewFile();
+        File path2 = new File("/Users/antonobolonik/Downloads/TEST/file2.txt");
+        path2.createNewFile();
+        File path3 = new File("/Users/antonobolonik/Downloads/TEST/file3.txt");
+        path3.createNewFile();
+        File path4 = new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST");
+        path4.mkdir();
+        File path5 = new File("/Users/antonobolonik/Downloads/TEST//INNER_TEST/file4.txt");
+        path5.createNewFile();
+        File path6 = new File("/Users/antonobolonik/Downloads/TEST//INNER_TEST/file5.txt");
+        path6.createNewFile();
+        File path7 = new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER");
+        path7.mkdir();
+        File path8 = new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER/file6.txt");
+        path8.createNewFile();
+
+        //empty dir
+        File path9 = new File("/Users/antonobolonik/Downloads/TEST3");
+        path9.mkdir();
+    }
+
+    @After
+    @Test
+    void destroy() throws IOException {
+
+        File path8 = new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER/file6.txt");
+        path8.delete();
+        File path7 = new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER");
+        path7.delete();
+
+        File path5 = new File("/Users/antonobolonik/Downloads/TEST//INNER_TEST/file4.txt");
+        path5.delete();
+        File path6 = new File("/Users/antonobolonik/Downloads/TEST//INNER_TEST/file5.txt");
+        path6.delete();
+        File path4 = new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST");
+        path4.delete();
+
+        File path1 = new File("/Users/antonobolonik/Downloads/TEST/file1.txt");
+        path1.delete();
+        File path2 = new File("/Users/antonobolonik/Downloads/TEST/file2.txt");
+        path2.delete();
+        File path3 = new File("/Users/antonobolonik/Downloads/TEST/file3.txt");
+        path3.delete();
+        File path = new File("/Users/antonobolonik/Downloads/TEST");
+        path.delete();
+
+        //empty dir
+        File path9 = new File("/Users/antonobolonik/Downloads/TEST3");
+        path9.delete();
+    }
 
     @DisplayName("Test for count files")
     @Test
@@ -91,6 +125,7 @@ class FileManagerTest {
         InputStream inputStream2 = new FileInputStream(copy);
         byte[] copyBytes = inputStream2.readAllBytes();
         assertEquals(fromBytes.length, copyBytes.length);
+        //copy.delete();
         inputStream.close();
         inputStream2.close();
     }
@@ -100,6 +135,7 @@ class FileManagerTest {
         FileManager.copy("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER", empty);
         assertEquals(FileManager.countFiles("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER"),
                 FileManager.countFiles(empty));
+
     }
 
     //hard to test...
