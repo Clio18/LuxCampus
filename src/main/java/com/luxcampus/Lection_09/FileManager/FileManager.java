@@ -57,13 +57,14 @@ public class FileManager {
     public static void move(String from, String to) throws IOException {
         copy(from, to);
         File path = new File(from);
-        for (File file : path.listFiles()) {
-            if (file.isDirectory()) {
-                deleteFromDir(file);
-                file.delete();
-            } else file.delete();
-        }
-        path.delete();
+        deleteFromDir(path);
+        deleteDir(path.getPath());
+    }
+
+    public static void moveFile(String from, String to) throws IOException {
+        copy(from, to);
+        File path = new File(from);
+        deleteFromDir(path);
     }
 
     public static void deleteFromDir(File dir) {
@@ -75,12 +76,12 @@ public class FileManager {
         }
     }
 
-//    public static void deleteDir(String path) {
-//        File dir = new File(path);
-//        if (dir.listFiles().length > 0) {
-//            deleteFromDir(dir);
-//        } else dir.delete();
-//    }
+    public static void deleteDir(String path) {
+        File dir = new File(path);
+        if (dir.listFiles().length > 0) {
+            deleteFromDir(dir);
+        } else dir.delete();
+    }
 
     public static void copyFile(File from, File to) throws IOException {
         if (!to.exists()) {

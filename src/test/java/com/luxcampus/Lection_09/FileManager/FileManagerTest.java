@@ -2,8 +2,7 @@ package com.luxcampus.Lection_09.FileManager;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,7 +18,7 @@ class FileManagerTest {
     String empty = "/Users/antonobolonik/Downloads/TEST3";
 
 
-    @Before
+    @BeforeEach
     @Test
     void init() throws IOException {
         //files - 6, folders - 3
@@ -47,7 +46,7 @@ class FileManagerTest {
         path9.mkdir();
     }
 
-    @After
+    @AfterEach
     @Test
     void destroy() throws IOException {
 
@@ -74,7 +73,11 @@ class FileManagerTest {
 
         //empty dir
         File path9 = new File("/Users/antonobolonik/Downloads/TEST3");
-        path9.delete();
+        if (path9.list().length>0){
+            File path10 = new File("/Users/antonobolonik/Downloads/TEST3/file6.txt");
+            path10.delete();
+            path9.delete();
+        } else path9.delete();
     }
 
     @DisplayName("Test for count files")
@@ -91,13 +94,10 @@ class FileManagerTest {
         });
     }
 
-    //should it be 0...
     @DisplayName("Test for count files in empty dir")
     @Test
     void countFilesInEmptyDir() {
-        assertThrows(NullPointerException.class, () -> {
-            FileManager.countFiles(empty);
-        });
+        assertEquals(0, fileManager.countFiles(empty));
     }
 
     @DisplayName("Test for count dirs")
@@ -129,6 +129,17 @@ class FileManagerTest {
         inputStream.close();
         inputStream2.close();
     }
+
+    @DisplayName("Test for count files in dir after copy to")
+    @Test
+    void countFilesInEmptyDirAfterCopyTo() throws IOException {
+        FileManager.copyFile(new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER/file6.txt"), new File(empty));
+        assertEquals(1, FileManager.countFiles(empty));
+        FileManager.deleteFromDir(new File(empty));
+        assertEquals(0, FileManager.countFiles(empty));
+
+    }
+
     @DisplayName("Test copy from dir to dir")
     @Test
     void copyFromDirToDir() throws IOException {
@@ -140,27 +151,85 @@ class FileManagerTest {
 
     //hard to test...
     @Test
-    void move() throws IOException {
-//        File from = new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER");
-//        File copy = new File(empty);
-//        assertEquals(1, from.listFiles().length);
-//       // assertEquals(0, copy.listFiles().length);
-//
-//        FileManager.move("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER", empty);
-//        assertEquals(0, from.listFiles().length);
-//        assertEquals(1, copy.listFiles().length);
+    void moveFile() throws IOException {
+        File from = new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER");
+        File copy = new File(empty);
 
+        //the folder empty is empty
+        assertEquals(0, FileManager.countFiles(copy.getPath()));
+        //the folder contains 1 element
+        assertEquals(1, FileManager.countFiles(from.getPath()));
+
+        FileManager.moveFile("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER", empty);
+        //the folder empty is not empty
+        assertEquals(1, FileManager.countFiles(copy.getPath()));
+        //the folder does not contain element
+        assertEquals(0, FileManager.countFiles(from.getPath()));
+    }
+
+    @Test
+    void moveDir() throws IOException {
+        File from = new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER");
+        File copy = new File(empty);
+
+        //the folder empty is empty
+        assertEquals(0, FileManager.countFiles(copy.getPath()));
+        //the folder contains 1 element
+        assertEquals(1, FileManager.countFiles(from.getPath()));
+
+        FileManager.moveFile("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER", empty);
+        //the folder empty is not empty
+        assertEquals(1, FileManager.countFiles(copy.getPath()));
+        //the folder does not contain element
+        assertEquals(0, FileManager.countFiles(from.getPath()));
+    }
+
+    @Test
+    void move() throws IOException {
+        File from = new File("/Users/antonobolonik/Downloads/TEST");
+        File copy = new File(empty);
+        int count = FileManager.countFiles(from.getPath());
+
+        FileManager.move(from.getPath(), empty);
+        //the folder empty is not empty
+        assertEquals(count, FileManager.countFiles(copy.getPath()));
     }
 
     @Test
     void deleteFromDir() {
+        File from = new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER");
+        assertEquals(1, FileManager.countFiles(from.getPath()));
+        FileManager.deleteFromDir(from);
+        assertEquals(0, FileManager.countFiles(from.getPath()));
+
     }
 
     @Test
-    void copyFile() {
+    void copyFile() throws IOException {
+        File from = new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER");
+        File file = new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER/file6.txt");
+        File copy = new File(empty);
+
+        //the folder empty is empty
+        assertEquals(0, FileManager.countFiles(copy.getPath()));
+        //the folder contains 1 element
+        assertEquals(1, FileManager.countFiles(from.getPath()));
+
+        FileManager.copyFile(file, copy);
+        //the folder empty is not empty
+        assertEquals(1, FileManager.countFiles(copy.getPath()));
+        //the folder does not contain element
+        assertEquals(1, FileManager.countFiles(from.getPath()));
     }
 
     @Test
-    void copyDir() {
+    void copyDir() throws IOException {
+        File from = new File("/Users/antonobolonik/Downloads/TEST");
+        File copy = new File(empty);
+        int count = FileManager.countFiles(from.getPath());
+
+        FileManager.copyDir(from, copy);
+        //the folder empty is not empty
+        assertEquals(count, FileManager.countFiles(copy.getPath()));
     }
 }
