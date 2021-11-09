@@ -1,8 +1,11 @@
 package com.luxcampus.Lection_08.LinkedList;
+import com.luxcampus.Lection_07.List;
+
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class LinkedList implements List {
+public class LinkedList implements List, Iterable {
     private int size;
     private Node head;
     private Node tail;
@@ -96,7 +99,7 @@ public class LinkedList implements List {
 
     @Override
     public Object get(int index) {
-        Object result = null;
+        Object result;
         if (index < 0 || index > size - 1) {
             throw new IllegalArgumentException("Wrong index!");
         } else if (index == 0) {
@@ -173,7 +176,7 @@ public class LinkedList implements List {
         int result = -1;
         Node current = head;
         for (int i = 0; i < size; i++) {
-            if (current.value.equals(value)) {
+            if (Objects.equals(current.value, value)) {
                 result = i;
                 continue;
             }
@@ -194,5 +197,25 @@ public class LinkedList implements List {
             current = current.next;
         }
         return stringJoiner.toString();
+    }
+
+    @Override
+    public Iterator iterator() {
+        return new LinkedListIterator();
+    }
+    private class LinkedListIterator implements Iterator{
+        private int position;
+
+        @Override
+        public boolean hasNext() {
+            return position<size;
+        }
+
+        @Override
+        public Object next() {
+            Object value = get(position);
+            position++;
+            return value;
+        }
     }
 }

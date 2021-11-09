@@ -1,6 +1,8 @@
 package com.luxcampus.Lection_06;
 
-public class ArrayQueue implements Queue {
+import java.util.Iterator;
+
+public class ArrayQueue implements Queue, Iterable {
     private int size;
     private Object[] array;
 
@@ -84,7 +86,6 @@ public class ArrayQueue implements Queue {
         if(isEmpty()){
             return "[]";
         }
-        String result = "";
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < size; i++) {
             stringBuilder.append(array[i].toString());
@@ -96,4 +97,24 @@ public class ArrayQueue implements Queue {
     }
 
 
+    @Override
+    public Iterator iterator() {
+        return new ArrayQueueIterator();
+    }
+
+    private class ArrayQueueIterator implements Iterator{
+        private int position = 0;
+
+        @Override
+        public boolean hasNext() {
+            return position<size;
+        }
+
+        @Override
+        public Object next(){
+            Object value = array[position];
+            position++;
+            return value;
+        }
+    }
 }

@@ -1,8 +1,12 @@
 package com.luxcampus.Lection_07;
 
+import com.luxcampus.TEST.PersonComparator;
+
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.StringJoiner;
 
-public class ArrayList implements List {
+public class ArrayList implements List, Iterable {
     private int size;
     private Object[] array;
 
@@ -42,7 +46,7 @@ public class ArrayList implements List {
         Object result;
         // delete index 0
         if (index < 0 || index > size - 1) {
-            throw new IllegalArgumentException("Index should be in the range [0, size-1]");
+            throw new IndexOutOfBoundsException("Index should be in the range [0, size-1]");
         }
         else if (index == size - 1) {
             result = array[size - 1];
@@ -60,7 +64,7 @@ public class ArrayList implements List {
 
     @Override
     public Object get(int index) {
-        if (0 < index && index < size) {
+        if (0 <= index && index < size) {
             return array[index];
         } else throw new ArrayIndexOutOfBoundsException("Wrong index!");
     }
@@ -72,7 +76,7 @@ public class ArrayList implements List {
             result = array[index];
             array[index] = value;
             return result;
-        } else throw new ArrayIndexOutOfBoundsException("Wrong index!");
+        } else throw new IllegalArgumentException("Wrong index!");
     }
 
     @Override
@@ -154,6 +158,27 @@ public class ArrayList implements List {
                 newArr[i] = array[i];
             }
             array = newArr;
+        }
+    }
+
+
+    @Override
+    public Iterator iterator() {
+        return new ArrayListIterator();
+    }
+    private class ArrayListIterator implements Iterator {
+        private int position = 0;
+
+        @Override
+        public boolean hasNext() {
+            return position<size;
+        }
+
+        @Override
+        public Object next() {
+            Object value = array[position];
+            position++;
+            return value;
         }
     }
 }
