@@ -3,13 +3,6 @@ package com.luxcampus.Lection_09.FileManager;
 import java.io.*;
 
 public class FileManager {
-    //    public static void main(String[] args) throws IOException {
-//
-//        File file = new File("/Users/antonobolonik/Downloads/TEST3");
-//        System.out.println(file.listFiles().length);
-//        deleteDir(file);
-//
-//    }
     // public static int countFiles(String path) - принимает путь к папке,
     // возвращает количество файлов в папке и всех подпапках по пути
     //each time when Finder creates folder (or somebody enters into folder) the new file .DS_Store created too, so every folder contains at least 1 file
@@ -64,7 +57,14 @@ public class FileManager {
     public static void moveFile(String from, String to) throws IOException {
         copy(from, to);
         File path = new File(from);
+        path.delete();
+    }
+
+    public static void moveDir(String from, String to) throws IOException {
+        copy(from, to);
+        File path = new File(from);
         deleteFromDir(path);
+        deleteDir(path.getPath());
     }
 
     public static void deleteFromDir(File dir) {
