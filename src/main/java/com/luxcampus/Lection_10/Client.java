@@ -1,4 +1,4 @@
-package com.luxcampus.Lection_10.Server;
+package com.luxcampus.Lection_10;
 import java.io.*;
 import java.net.Socket;
 
