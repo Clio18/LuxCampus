@@ -1,6 +1,9 @@
 package com.luxcampus.Lection_06;
 
+import com.luxcampus.Lection_07.ArrayList;
+
 import java.util.Iterator;
+import java.util.StringJoiner;
 
 public class ArrayQueue implements Queue, Iterable {
     private int size;
@@ -86,14 +89,13 @@ public class ArrayQueue implements Queue, Iterable {
         if(isEmpty()){
             return "[]";
         }
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < size; i++) {
-            stringBuilder.append(array[i].toString());
-            if(i<size-1){
-                stringBuilder.append(", ");
-            }
+        StringJoiner stringJoiner = new StringJoiner(", ", "[", "]");
+        ArrayQueue queue = ArrayQueue.this;
+        Iterator iterator = queue.iterator();
+        while (iterator.hasNext()){
+            stringJoiner.add(iterator.next().toString());
         }
-        return "["+ stringBuilder.toString()+"]";
+        return stringJoiner.toString();
     }
 
 

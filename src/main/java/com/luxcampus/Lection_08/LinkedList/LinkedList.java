@@ -191,10 +191,10 @@ public class LinkedList implements List, Iterable {
             return "[]";
         }
         StringJoiner stringJoiner = new StringJoiner(", ", "[", "]");
-        Node current = head;
-        for (int i = 0; i < size; i++) {
-            stringJoiner.add(current.value.toString());
-            current = current.next;
+        LinkedList linkedList = LinkedList.this;
+        Iterator iterator = linkedList.iterator();
+        while (iterator.hasNext()){
+            stringJoiner.add(iterator.next().toString());
         }
         return stringJoiner.toString();
     }

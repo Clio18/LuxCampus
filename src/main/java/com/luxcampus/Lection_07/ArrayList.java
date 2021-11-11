@@ -145,8 +145,10 @@ public class ArrayList implements List, Iterable {
             return "[]";
         }
         StringJoiner stringJoiner = new StringJoiner(", ", "[", "]");
-        for (int i = 0; i < size; i++) {
-            stringJoiner.add(array[i].toString());
+        ArrayList list = ArrayList.this;
+        Iterator iterator = list.iterator();
+        while (iterator.hasNext()){
+            stringJoiner.add(iterator.next().toString());
         }
         return stringJoiner.toString();
     }
@@ -166,6 +168,7 @@ public class ArrayList implements List, Iterable {
     public Iterator iterator() {
         return new ArrayListIterator();
     }
+
     private class ArrayListIterator implements Iterator {
         private int position = 0;
 
