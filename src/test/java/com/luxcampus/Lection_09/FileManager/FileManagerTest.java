@@ -12,75 +12,75 @@ import static org.junit.jupiter.api.Assertions.*;
 class FileManagerIntegrationTest {
     FileManager fileManager;
 
-    String base = "/Users/antonobolonik/Downloads/TEST";
-    String notExist = "/Users/antonobolonik/Downloads/TEST1";
-    String empty = "/Users/antonobolonik/Downloads/TEST3";
+    String pathToVeryOuterFolder = "TEST";
+    String notExist = "TEST1";
+    String pathToEmptyFolder = "TEST3";
     //path to file which we want to copy
-    String pathToFileForCopy = "/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER/file6.txt";
+    String pathToFileForCopy = "TEST/INNER_TEST/INNER_INNER/file6.txt";
     //path to dir which we want to copy
-    String pathToDirForCopy = "/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER";
+    String pathToDirForCopy = "TEST/INNER_TEST/INNER_INNER";
 
 
     @BeforeEach
     void init() throws IOException {
         //files - 6, folders - 3
-        File path = new File("/Users/antonobolonik/Downloads/TEST");
+        File path = new File("TEST");
         path.mkdir();
-        File path1 = new File("/Users/antonobolonik/Downloads/TEST/file1.txt");
+        File path1 = new File("TEST/file1.txt");
         path1.createNewFile();
-        File path2 = new File("/Users/antonobolonik/Downloads/TEST/file2.txt");
+        File path2 = new File("TEST/file2.txt");
         path2.createNewFile();
-        File path3 = new File("/Users/antonobolonik/Downloads/TEST/file3.txt");
+        File path3 = new File("TEST/file3.txt");
         path3.createNewFile();
-        File path4 = new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST");
+        File path4 = new File("TEST/INNER_TEST");
         path4.mkdir();
-        File path5 = new File("/Users/antonobolonik/Downloads/TEST//INNER_TEST/file4.txt");
+        File path5 = new File("TEST//INNER_TEST/file4.txt");
         path5.createNewFile();
-        File path6 = new File("/Users/antonobolonik/Downloads/TEST//INNER_TEST/file5.txt");
+        File path6 = new File("TEST//INNER_TEST/file5.txt");
         path6.createNewFile();
-        File path7 = new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER");
+        File path7 = new File("TEST/INNER_TEST/INNER_INNER");
         path7.mkdir();
-        File path8 = new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER/file6.txt");
+        File path8 = new File("TEST/INNER_TEST/INNER_INNER/file6.txt");
         path8.createNewFile();
 
         //empty dir
-        File path9 = new File("/Users/antonobolonik/Downloads/TEST3");
+        File path9 = new File("TEST3");
         path9.mkdir();
     }
 
     @AfterEach
     void destroy() throws IOException {
 
-        File path8 = new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER/file6.txt");
+        File path8 = new File("TEST/INNER_TEST/INNER_INNER/file6.txt");
         path8.delete();
-        File path7 = new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST/INNER_INNER");
+        File path7 = new File("TEST/INNER_TEST/INNER_INNER");
         path7.delete();
 
-        File path5 = new File("/Users/antonobolonik/Downloads/TEST//INNER_TEST/file4.txt");
+        File path5 = new File("TEST/INNER_TEST/file4.txt");
         path5.delete();
-        File path6 = new File("/Users/antonobolonik/Downloads/TEST//INNER_TEST/file5.txt");
+        File path6 = new File("TEST/INNER_TEST/file5.txt");
         path6.delete();
-        File path4 = new File("/Users/antonobolonik/Downloads/TEST/INNER_TEST");
+        File path4 = new File("TEST/INNER_TEST");
         path4.delete();
 
-        File path1 = new File("/Users/antonobolonik/Downloads/TEST/file1.txt");
+        File path1 = new File("TEST/file1.txt");
         path1.delete();
-        File path2 = new File("/Users/antonobolonik/Downloads/TEST/file2.txt");
+        File path2 = new File("TEST/file2.txt");
         path2.delete();
-        File path3 = new File("/Users/antonobolonik/Downloads/TEST/file3.txt");
+        File path3 = new File("TEST/file3.txt");
         path3.delete();
-        File path = new File("/Users/antonobolonik/Downloads/TEST");
+        File path = new File("TEST");
         path.delete();
 
         //empty dir
-        File path9 = new File("/Users/antonobolonik/Downloads/TEST3");
+        File path9 = new File("TEST3");
         path9.delete();
     }
 
     @DisplayName("Test for count files")
     @Test
     void countFiles() {
-        assertEquals(6, FileManager.countFiles(base));
+        assertEquals(6, FileManager.countFiles(pathToVeryOuterFolder));
     }
 
     @DisplayName("Test for count files on non existing folder")
@@ -94,13 +94,13 @@ class FileManagerIntegrationTest {
     @DisplayName("Test for count files in empty dir")
     @Test
     void countFilesInEmptyDir() {
-        assertEquals(0, fileManager.countFiles(empty));
+        assertEquals(0, fileManager.countFiles(pathToEmptyFolder));
     }
 
     @DisplayName("Test for count dirs")
     @Test
     void countDirs() {
-        assertEquals(2, FileManager.countDirs(base));
+        assertEquals(2, FileManager.countDirs(pathToVeryOuterFolder));
     }
 
     @DisplayName("Test for count dirs on non existing folder")
@@ -119,9 +119,9 @@ class FileManagerIntegrationTest {
         String line = "Message";
         Files.write(Paths.get(pathToFileForCopy), line.getBytes(StandardCharsets.UTF_8));
         //copy file to the empty folder
-        FileManager.copy(pathToFileForCopy, empty);
+        FileManager.copy(pathToFileForCopy, pathToEmptyFolder);
 
-        File copy = new File(empty + "/" + from.getName());
+        File copy = new File(pathToEmptyFolder + "/" + from.getName());
         //read message from the file which was copied
         InputStream inputStream = new FileInputStream(copy);
         byte[] copyBytes = inputStream.readAllBytes();
@@ -130,7 +130,7 @@ class FileManagerIntegrationTest {
         assertEquals(line, expected);
 
         //delete this file from empty dir
-        FileManager.deleteFromDir(new File(empty));
+        FileManager.deleteFromDir(new File(pathToEmptyFolder));
 
         inputStream.close();
     }
@@ -138,27 +138,27 @@ class FileManagerIntegrationTest {
     @DisplayName("Test for count files in dir after copy to")
     @Test
     void countFilesInEmptyDirAfterCopyTo() throws IOException {
-        FileManager.copyFile(new File(pathToFileForCopy), new File(empty));
-        assertEquals(1, FileManager.countFiles(empty));
-        FileManager.deleteFromDir(new File(empty));
-        assertEquals(0, FileManager.countFiles(empty));
+        FileManager.copyFile(new File(pathToFileForCopy), new File(pathToEmptyFolder));
+        assertEquals(1, FileManager.countFiles(pathToEmptyFolder));
+        FileManager.deleteFromDir(new File(pathToEmptyFolder));
+        assertEquals(0, FileManager.countFiles(pathToEmptyFolder));
     }
 
     @DisplayName("Test copy from dir to dir")
     @Test
     void copyFromDirToDir() throws IOException {
-        FileManager.copy(pathToDirForCopy, empty);
+        FileManager.copy(pathToDirForCopy, pathToEmptyFolder);
         assertEquals(FileManager.countFiles(pathToDirForCopy),
-                FileManager.countFiles(empty));
+                FileManager.countFiles(pathToEmptyFolder));
     }
 
     @DisplayName("Test for move dir with files (all structure)")
     @Test
     void moveFileToDir() throws IOException {
-        File copy = new File(empty);
+        File copy = new File(pathToEmptyFolder);
         //the folder empty is empty
         assertEquals(0, FileManager.countFiles(copy.getPath()));
-        FileManager.moveFile(pathToFileForCopy, empty);
+        FileManager.moveFile(pathToFileForCopy, pathToEmptyFolder);
         //the folder empty is not empty
         assertEquals(1, FileManager.countFiles(copy.getPath()));
         //back to given structure
@@ -170,33 +170,33 @@ class FileManagerIntegrationTest {
     @Test
     void moveDirToDir() throws IOException {
         File from = new File(pathToDirForCopy);
-        File copy = new File(empty);
+        File copy = new File(pathToEmptyFolder);
 
         //the folder empty is empty
         assertEquals(0, FileManager.countFiles(copy.getPath()));
         //the folder contains 1 element
         assertEquals(1, FileManager.countFiles(from.getPath()));
 
-        FileManager.moveDir(pathToDirForCopy, empty);
+        FileManager.moveDir(pathToDirForCopy, pathToEmptyFolder);
         //the folder empty is not empty
         assertEquals(1, FileManager.countFiles(copy.getPath()));
         //back to structure
-        FileManager.moveDir(empty, pathToDirForCopy);
+        FileManager.moveDir(pathToEmptyFolder, pathToDirForCopy);
     }
 
     @DisplayName("Test for move structure")
     @Test
     void move() throws IOException {
-        File from = new File("/Users/antonobolonik/Downloads/TEST");
-        File copy = new File(empty);
+        File from = new File(pathToVeryOuterFolder);
+        File copy = new File(pathToEmptyFolder);
         int count = FileManager.countFiles(from.getPath());
 
-        FileManager.move(from.getPath(), empty);
+        FileManager.move(from.getPath(), pathToEmptyFolder);
         //the folder empty is not empty
         assertEquals(count, FileManager.countFiles(copy.getPath()));
 
         //back to structure
-        FileManager.move(empty, from.getPath());
+        FileManager.move(pathToEmptyFolder, from.getPath());
     }
 
     @DisplayName("Test for delete from dir")
@@ -213,7 +213,7 @@ class FileManagerIntegrationTest {
     void copyFile() throws IOException {
         File from = new File(pathToDirForCopy);
         File file = new File(pathToFileForCopy);
-        File to = new File(empty);
+        File to = new File(pathToEmptyFolder);
 
         //the folder empty is empty
         assertEquals(0, FileManager.countFiles(to.getPath()));
@@ -232,9 +232,9 @@ class FileManagerIntegrationTest {
     @DisplayName("Test for copy dir")
     @Test
     void copyDir() throws IOException {
-        File from = new File(base);
+        File from = new File(pathToVeryOuterFolder);
 
-        File copy = new File(empty);
+        File copy = new File(pathToEmptyFolder);
         int count = FileManager.countFiles(from.getPath());
 
         FileManager.copyDir(from, copy);

@@ -42,32 +42,31 @@ public class FileManager {
         File toFile = new File(to);
         if (fromFile.isDirectory()) {
             copyDir(fromFile, toFile);
-        } else copyFile(fromFile, toFile);
+        } else {
+            copyFile(fromFile, toFile);
+        }
     }
 
     //- метод по перемещению папок и файлов.
     //Параметр from - путь к файлу или папке, параметр to - путь к папке куда будет производиться копирование
     public static void move(String from, String to) throws IOException {
-        copy(from, to);
-        File path = new File(from);
-        deleteFromDir(path);
-        deleteDir(path.getPath());
+        new File(from).renameTo(new File(to));
     }
 
-    public static void moveFile(String from, String to) throws IOException {
+    static void moveFile(String from, String to) throws IOException {
         copy(from, to);
         File path = new File(from);
         path.delete();
     }
 
-    public static void moveDir(String from, String to) throws IOException {
+    static void moveDir(String from, String to) throws IOException {
         copy(from, to);
         File path = new File(from);
         deleteFromDir(path);
         deleteDir(path.getPath());
     }
 
-    public static void deleteFromDir(File dir) {
+    static void deleteFromDir(File dir) {
         for (File file : dir.listFiles()) {
             if (file.isDirectory()) {
                 deleteFromDir(file);
@@ -76,22 +75,22 @@ public class FileManager {
         }
     }
 
-    public static void deleteDir(String path) {
+    static void deleteDir(String path) {
         File dir = new File(path);
         if (dir.listFiles().length > 0) {
             deleteFromDir(dir);
         } else dir.delete();
     }
 
-    public static void copyFile(File from, File to) throws IOException {
+    static void copyFile(File from, File to) throws IOException {
         if (!to.exists()) {
             if (to.isDirectory()) {
-                to = new File(to.getPath() + "/" + from.getName());
+                to = new File(to.getPath(), from.getName());
             }
             to.createNewFile();
         } else {
             if (to.isDirectory()) {
-                to = new File(to.getPath() + "/" + from.getName());
+                to = new File(to.getPath(), from.getName());
             }
         }
         //read from file
@@ -106,18 +105,16 @@ public class FileManager {
         outputStream.close();
     }
 
-    public static void copyDir(File from, File to) throws IOException {
+    static void copyDir(File from, File to) throws IOException {
         if (!to.exists()) {
             to.mkdir();
         }
         to = new File(to.getPath());
         for (File file : from.listFiles()) {
             if (file.isFile()) {
-                copyFile(file, new File(to.getPath() + "/" +
-                        file.getName()));
+                copyFile(file, new File(to.getPath(), file.getName()));
             } else if (file.isDirectory()) {
-                copyDir(file, new File(to.getPath() + "/" +
-                        file.getName()));
+                copyDir(file, new File(to.getPath(), file.getName()));
             }
         }
     }
