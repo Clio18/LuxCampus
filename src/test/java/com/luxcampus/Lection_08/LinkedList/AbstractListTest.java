@@ -70,6 +70,14 @@ abstract class AbstractListTest {
         assertFalse(list.contains(100));
     }
 
+    @DisplayName("Test for removing element with index 0")
+    @Test
+    void testAddRemoveIndexOne() {
+        list.add(100);//0
+        list.remove(0);
+        assertEquals(0, list.size());;
+    }
+
     @DisplayName("Test for adding, removing and checking the size")
     @Test
     void testAddRemoveAndCheckSize() {
@@ -160,6 +168,7 @@ abstract class AbstractListTest {
         list.add(100, 0); //[100, 0, 1, 2, 3, 4]
         assertEquals(6, list.size());
         assertTrue(list.contains(0));
+        assertTrue(list.contains(4));
         assertTrue(list.contains(100));
 
         list.add(200, 5); //[100, 0, 1, 2, 3, 200, 4]
@@ -193,12 +202,12 @@ abstract class AbstractListTest {
     @Test
     void testAddByIndAndRemoveByInd(){
        // LinkedList list = new LinkedList();
-        list.add(100, 0);
-        list.add(200, 0);
-        assertEquals(2, list.size());
-        list.remove(1);
-        assertEquals(1, list.size());
-        assertFalse(list.contains(100));
+        list.add(100, 0); //100
+        list.add(200, 0); // 200, 100
+        assertEquals(2, list.size()); //2
+        list.remove(1); //200
+        assertEquals(1, list.size());//1
+        assertFalse(list.contains(100)); //true
     }
 
     @DisplayName("Test get and set element")
@@ -291,6 +300,18 @@ abstract class AbstractListTest {
         }
         assertEquals("[]", list.toString());
     }
+
+    @DisplayName("Test get and set element")
+    @Test
+    void testGetNode(){
+        // LinkedList list = new LinkedList();
+        for (int i = 0; i < 5; i++) { //[0, 1, 2, 3, 4,....]
+            list.add(i);
+        }
+        int a = (int) list.get(2);
+        assertEquals(2, a);
+    }
+
 
 
 }
