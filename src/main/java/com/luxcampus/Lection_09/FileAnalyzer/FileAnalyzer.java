@@ -19,21 +19,21 @@ public class FileAnalyzer {
     }
 
     //list of Objects....
-    public List<Pattern> getListOfPatterns(File path) throws IOException {
+    public List<byte[]> getListOfPatterns(File path) throws IOException {
         int[] delimiters = new int[]{'.', '!', '?'};
         InputStream inputStream = new FileInputStream(path);
         List<Byte> listBytes = new ArrayList();
-        List<Pattern> list = new ArrayList();
+        List<byte []> list = new ArrayList();
         byte value;
         while (true) {
             value = (byte) inputStream.read();
             listBytes.add(value);
             if (value == delimiters[0] || value == delimiters[1] || value == delimiters[2]) {
-                int[] array = new int[listBytes.size()];
+                byte[] array = new byte[listBytes.size()];
                 for (int i = 0; i < array.length; i++) {
-                    array[i] = (int) listBytes.get(i);
+                    array[i] = listBytes.get(i);
                 }
-                list.add(new Pattern(array));
+                list.add(array);
                 listBytes = new ArrayList();
             }
             if (value == -1) {
@@ -45,8 +45,7 @@ public class FileAnalyzer {
     }
 
     //count of word appearance in one sentence
-    public int getAppearance(Pattern pattern, String word) {
-        byte[] bytes = pattern.getArray();
+    public int getAppearance(byte [] bytes, String word) {
         byte[] wordBytes = word.getBytes(StandardCharsets.UTF_8);
         int counter = 0;
         int appearance = 0;
@@ -67,20 +66,20 @@ public class FileAnalyzer {
 
     //count of word appearance in the text
     public int getCount(File path, String word) throws IOException {
-        List list = getListOfPatterns(path);
+        List <byte[]> list = getListOfPatterns(path);
         int count = 0;
         for (int i = 0; i < list.size(); i++) {
-            Pattern pattern = (Pattern) list.get(i);
+            byte [] pattern = list.get(i);
             count = count + getAppearance(pattern, word);
         }
         return count;
     }
 
     public void printGetCount(File path, String word) throws IOException {
-        List list = getListOfPatterns(path);
+        List <byte[]> list = getListOfPatterns(path);
         int count = 0;
         for (int i = 0; i < list.size(); i++) {
-            Pattern pattern = (Pattern) list.get(i);
+            byte [] pattern = list.get(i);
             count = count + getAppearance(pattern, word);
         }
         System.out.println(count);
@@ -88,27 +87,25 @@ public class FileAnalyzer {
 
     //get list of sentences
     public List getSentences(File path, String word) throws IOException {
-        List list = getListOfPatterns(path);
-        List sentences = new ArrayList();
+        List <byte[]> list = getListOfPatterns(path);
+        List<String> sentences = new ArrayList();
         for (int i = 0; i < list.size(); i++) {
-            Pattern pattern = (Pattern) list.get(i);
-            byte[] a = pattern.getArray();
+            byte [] pattern = list.get(i);
             int count = getAppearance(pattern, word);
             if (count != 0) {
-                sentences.add(new String(a));
+                sentences.add(new String(pattern));
             }
         }
         return sentences;
     }
 
     public void printSentences(File path, String word) throws IOException {
-        List list = getListOfPatterns(path);
+        List <byte[]> list = getListOfPatterns(path);
         for (int i = 0; i < list.size(); i++) {
-            Pattern pattern = (Pattern) list.get(i);
-            byte[] a = pattern.getArray();
+            byte [] pattern = list.get(i);
             int count = getAppearance(pattern, word);
             if (count != 0) {
-                System.out.println(new String(a));
+                System.out.println(new String(pattern));
             }
         }
     }

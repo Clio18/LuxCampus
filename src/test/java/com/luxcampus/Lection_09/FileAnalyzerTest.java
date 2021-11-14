@@ -1,7 +1,7 @@
 package com.luxcampus.Lection_09;
 
+import com.luxcampus.Lection_07.List;
 import com.luxcampus.Lection_09.FileAnalyzer.FileAnalyzer;
-import com.luxcampus.Lection_09.FileAnalyzer.Pattern;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,8 +32,10 @@ class FileAnalyzerTest {
     }
     @Test
     @DisplayName("Test get count of word in one sentence")
-    void testFindsAInOneSentence() throws IOException {
-        Pattern pattern = (Pattern) analyzer.getListOfPatterns(path).get(0);
+    void testFindsInOneSentence() throws IOException {
+        //Pattern pattern = (Pattern) analyzer.getListOfPatterns(path).get(0);
+        List<byte []> array = analyzer.getListOfPatterns(path);
+        byte [] pattern = array.get(0);
         assertEquals(4, analyzer.getAppearance(pattern, word));
     }
 
