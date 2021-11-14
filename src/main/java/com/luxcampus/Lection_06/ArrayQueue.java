@@ -5,16 +5,16 @@ import com.luxcampus.Lection_07.ArrayList;
 import java.util.Iterator;
 import java.util.StringJoiner;
 
-public class ArrayQueue implements Queue, Iterable {
+public class ArrayQueue<T> implements Queue<T> {
     private int size;
-    private Object[] array;
+    private T[] array;
 
     public ArrayQueue() {
-        array = new Object[10];
+        array = (T[]) new Object[10];
     }
 
     public ArrayQueue(int initialCapacity) {
-        array = new Object[initialCapacity];
+        array = (T[]) new Object[initialCapacity];
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ArrayQueue implements Queue, Iterable {
 
     private void ensureCapacity() {
         if (array.length == size) {
-            Object[] newArray = new Object[array.length * 2];
+            T[] newArray = (T[]) new Object[array.length * 2];
             for (int i = 0; i < array.length; i++) {
                 newArray[i] = array[i];
             }
@@ -38,18 +38,18 @@ public class ArrayQueue implements Queue, Iterable {
     }
 
     @Override
-    public void enqueue(Object value) {
+    public void enqueue(T value) {
         ensureCapacity();
         array[size] = value;
         size++;
     }
 
     @Override
-    public Object dequeue() {
+    public T dequeue() {
         if (isEmpty()) {
             throw new IllegalStateException("Queue is empty!");
         }
-        Object result = array[0];
+        T result = array[0];
         for (int i = 0; i < size-1; i++) {
             array[i] = array[++i];
         }
@@ -58,12 +58,12 @@ public class ArrayQueue implements Queue, Iterable {
     }
 
     @Override
-    public Object peek() {
+    public T peek() {
         return array[0];
     }
 
     @Override
-    public boolean contains(Object value) {
+    public boolean contains(T value) {
         for (int i = 0; i < size; i++) {
             if (value==null){
                 if (array[i] == null){
@@ -79,7 +79,7 @@ public class ArrayQueue implements Queue, Iterable {
     @Override
     public void clear() {
         for (int i = 0; i < size; i++) {
-            array[i] = 0;
+            array[i] = null;
         }
         size = 0;
     }
@@ -90,8 +90,7 @@ public class ArrayQueue implements Queue, Iterable {
             return "[]";
         }
         StringJoiner stringJoiner = new StringJoiner(", ", "[", "]");
-        ArrayQueue queue = ArrayQueue.this;
-        Iterator iterator = queue.iterator();
+        Iterator iterator = this.iterator();
         while (iterator.hasNext()){
             stringJoiner.add(iterator.next().toString());
         }
@@ -104,7 +103,7 @@ public class ArrayQueue implements Queue, Iterable {
         return new ArrayQueueIterator();
     }
 
-    private class ArrayQueueIterator implements Iterator{
+    private class ArrayQueueIterator implements Iterator<T>{
         private int position = 0;
 
         @Override
@@ -113,10 +112,16 @@ public class ArrayQueue implements Queue, Iterable {
         }
 
         @Override
-        public Object next(){
-            Object value = array[position];
+        public T next(){
+            T value = array[position];
             position++;
             return value;
+        }
+        @Override
+        public void remove(){
+            if(hasNext()){
+                ArrayQueue.this.dequeue();
+            }
         }
     }
 }

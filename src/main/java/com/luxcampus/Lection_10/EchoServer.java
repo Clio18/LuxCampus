@@ -12,6 +12,7 @@ public class EchoServer {
         //start Server
         ServerSocket serverSocket = new ServerSocket(5000);
         //accept the Socket from client
+
         Socket socket = serverSocket.accept();
         while (true) {
             //read data from socket

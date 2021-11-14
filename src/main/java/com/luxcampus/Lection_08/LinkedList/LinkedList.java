@@ -6,21 +6,32 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class LinkedList implements List, Iterable {
+public class LinkedList<T> implements List<T> {
     private int size;
     private Node head;
     private Node tail;
 
+    public static class Node {
+        private Object value;
+        private Node previous;
+        private Node next;
+
+        private Node(Object value, Node previous, Node next) {
+            this.value = value;
+            this.previous = previous;
+            this.next = next;
+        }
+    }
+
     @Override
-    public void add(Object value) {
+    public void add(T value) {
         add(value, size);
     }
 
     @Override
-    public void add(Object value, int index) {
-        if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException();
-        } else if (index == 0) {
+    public void add(T value, int index) {
+        checkBounds(index);
+        if (index == 0) {
             if (head == null) {
                 //add(value);
                 Node newNode = new Node(value, null, null);
@@ -53,12 +64,11 @@ public class LinkedList implements List, Iterable {
     }
 
     @Override
-    public Object remove(int index) {
-        Object object = null;
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException();
-        } else if (index == 0) {
-            object = head;
+    public T remove(int index) {
+        T object = null;
+        checkBounds(index);
+        if (index == 0) {
+            object = (T) head;
             head = head.next;
         } else if (index == size - 1) {
             tail = tail.previous;
@@ -68,7 +78,7 @@ public class LinkedList implements List, Iterable {
                 current = current.next;
             }
             Node removed = current.next;
-            object = removed;
+            object = (T) removed;
             current.next = removed.next;
             Node previous = removed.previous;
             previous.previous = current;
@@ -79,17 +89,17 @@ public class LinkedList implements List, Iterable {
 
 
     @Override
-    public Object get(int index) {
-        return getNode(index).value;
+    public T get(int index) {
+        return (T) getNode(index).value;
     }
 
     @Override
-    public Object set(Object value, int index) {
-        if (index < 0 || index > size - 1) {
+    public T set(Object value, int index) {
+        if (index < 0 || index > size-1) {
             throw new IllegalArgumentException("Wrong index!");
         }
         Node current = getNode(index);
-        Object oldValue = current.value;
+        T oldValue = (T) current.value;
         current.value = value;
         return oldValue;
     }
@@ -112,12 +122,12 @@ public class LinkedList implements List, Iterable {
     }
 
     @Override
-    public boolean contains(Object value) {
+    public boolean contains(T value) {
         return indexOf(value) != -1;
     }
 
     @Override
-    public int indexOf(Object value) {
+    public int indexOf(T value) {
         int result = -1;
         Node current = head;
         for (int i = 0; i < size; i++) {
@@ -134,7 +144,7 @@ public class LinkedList implements List, Iterable {
     }
 
     @Override
-    public int lastIndexOf(Object value) {
+    public int lastIndexOf(T value) {
         int result = -1;
         Node current = head;
         for (int i = 0; i < size; i++) {
@@ -164,11 +174,11 @@ public class LinkedList implements List, Iterable {
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<T> iterator() {
         return new LinkedListIterator();
     }
 
-    private class LinkedListIterator implements Iterator {
+    private class LinkedListIterator<T> implements Iterator<T> {
         private int position;
 
         @Override
@@ -177,17 +187,22 @@ public class LinkedList implements List, Iterable {
         }
 
         @Override
-        public Object next() {
+        public T next() {
             Node node = getNode(position);
             position++;
-            return node.value;
+            return (T) node.value;
+        }
+
+        @Override
+        public void remove(){
+            if (hasNext()){
+                LinkedList.this.remove(position);
+            }
         }
     }
 
     Node getNode(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException();
-        }
+        checkBounds(index);
         Node current = null;
         if (index < (size / 2)) {
             current = head;
@@ -201,5 +216,11 @@ public class LinkedList implements List, Iterable {
             }
         }
         return current;
+    }
+
+    void checkBounds(int index) {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException();
+        }
     }
 }

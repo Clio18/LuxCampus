@@ -19,14 +19,14 @@ public class FileAnalyzer {
     }
 
     //list of Objects....
-    public List getListOfPatterns(File path) throws IOException {
+    public List<Pattern> getListOfPatterns(File path) throws IOException {
         int[] delimiters = new int[]{'.', '!', '?'};
         InputStream inputStream = new FileInputStream(path);
-        List listBytes = new ArrayList();
-        List list = new ArrayList();
-        int value;
+        List<Byte> listBytes = new ArrayList();
+        List<Pattern> list = new ArrayList();
+        byte value;
         while (true) {
-            value = inputStream.read();
+            value = (byte) inputStream.read();
             listBytes.add(value);
             if (value == delimiters[0] || value == delimiters[1] || value == delimiters[2]) {
                 int[] array = new int[listBytes.size()];

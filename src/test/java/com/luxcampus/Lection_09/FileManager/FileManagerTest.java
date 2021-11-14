@@ -1,5 +1,7 @@
 package com.luxcampus.Lection_09.FileManager;
+
 import org.junit.jupiter.api.*;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -7,18 +9,18 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class FileManagerIntegrationTest {
     FileManager fileManager;
-
-    String pathToVeryOuterFolder = "TEST";
-    String notExist = "TEST1";
-    String pathToEmptyFolder = "TEST3";
+    static String pathToVeryOuterFolder = "TEST";
+    static String notExist = "TEST1";
+    static String pathToEmptyFolder = "TEST3";
     //path to file which we want to copy
-    String pathToFileForCopy = "TEST/INNER_TEST/INNER_INNER/file6.txt";
+    static String pathToFileForCopy = "TEST/INNER_TEST/INNER_INNER/file6.txt";
     //path to dir which we want to copy
-    String pathToDirForCopy = "TEST/INNER_TEST/INNER_INNER";
+    static String pathToDirForCopy = "TEST/INNER_TEST/INNER_INNER";
 
 
     @BeforeEach

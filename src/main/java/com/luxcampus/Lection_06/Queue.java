@@ -1,17 +1,17 @@
 package com.luxcampus.Lection_06;
 
-public interface Queue {
+public interface Queue<T> extends Iterable<T> {
     int size();
 
     boolean isEmpty();
 
-    void enqueue(Object value);
+    void enqueue(T value);
 
-    Object dequeue();
+    T dequeue();
 
-    Object peek();
+   T peek();
 
-    boolean contains(Object value);
+    boolean contains(T value);
 
     void clear();
 

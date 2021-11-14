@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 abstract class AbstractListTest {
-    List list = getList();
-    abstract com.luxcampus.Lection_07.List getList();
+    List<Integer> list = getList();
+    abstract List<Integer> getList();
     /*
     void add(Object value);
     void add(Object value, int index);
@@ -75,7 +75,7 @@ abstract class AbstractListTest {
     void testAddRemoveIndexOne() {
         list.add(100);//0
         list.remove(0);
-        assertEquals(0, list.size());;
+        assertEquals(0, list.size());
     }
 
     @DisplayName("Test for adding, removing and checking the size")
@@ -98,12 +98,12 @@ abstract class AbstractListTest {
     @Test
     void testAddToEmptyTwoElementsAndRemoveTwiceByZeroIndex() {
        // LinkedList list = new LinkedList();
-        list.add("a");
-        list.add("b");
+        list.add(1);
+        list.add(2);
         assertEquals(2, list.size());
         list.remove(0);
         assertEquals(1, list.size());
-        assertTrue(list.contains("b"));
+        assertTrue(list.contains(2));
         list.remove(0);
         assertTrue(list.isEmpty());
     }
@@ -150,7 +150,7 @@ abstract class AbstractListTest {
     void testAddAndRemoveAndCapacity() {
        // LinkedList list = new LinkedList();
         for (int i = 0; i < 15; i++) {
-            list.add("a");
+            list.add(1);
         }
         assertEquals(15, list.size());
         for (int i = 0; i < 15; i++) {
@@ -217,9 +217,9 @@ abstract class AbstractListTest {
         for (int i = 0; i < 5; i++) {
             list.add(i);
         }
-        assertEquals(2, list.get(2));
-        assertEquals(2, list.set(100, 2));
-        assertEquals(100, list.get(2));
+        assertEquals(2, list.get(2).byteValue());
+        assertEquals(2, list.set(100, 2).byteValue());
+        assertEquals(100, list.get(2).byteValue());
     }
     @DisplayName("Test set method after clear")
     @Test
@@ -308,7 +308,7 @@ abstract class AbstractListTest {
         for (int i = 0; i < 5; i++) { //[0, 1, 2, 3, 4,....]
             list.add(i);
         }
-        int a = (int) list.get(2);
+        int a = list.get(2);
         assertEquals(2, a);
     }
 

@@ -9,11 +9,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class ArrayListTest {
     public ArrayListTest() {
     }
+    ArrayList<String> list = new ArrayList<String>();
 
     @DisplayName("Test add 2 elements to empty list and remove twice from 0 index")
     @Test
     void testAddToEmptyTwoElementsAndRemoveTwiceByZeroIndex() {
-        ArrayList list = new ArrayList();
+
         list.add("a");
         list.add("b");
         assertEquals(2, list.size());
@@ -26,7 +27,6 @@ class ArrayListTest {
     @DisplayName("Test if contains null on empty list and adding null to list")
     @Test
     void testContainsNullAtEmptyAndAddNull() {
-        ArrayList list = new ArrayList();
         assertTrue(list.isEmpty());
         assertFalse(list.contains(null));
         list.add(null);
@@ -36,7 +36,7 @@ class ArrayListTest {
     @DisplayName("Test remove from beginning and end")
     @Test
     void testRemoveFromStartAndEnd(){
-        ArrayList list = new ArrayList();
+        ArrayList<Integer> list = new ArrayList<Integer>();
         for (int i = 0; i < 15; i++) {
             list.add(i);
         }
@@ -53,7 +53,7 @@ class ArrayListTest {
     @DisplayName("Test remove from 1 to size-1 index")
     @Test
     void testRemoveFromMiddle(){
-        ArrayList list = new ArrayList();
+        ArrayList<Integer> list = new ArrayList<Integer>();
         for (int i = 0; i < 15; i++) {
             list.add(i);
         }
@@ -64,7 +64,6 @@ class ArrayListTest {
     @DisplayName("Test add and remove with capacity ensuring")
     @Test
     void testAddAndRemoveAndCapacity() {
-        ArrayList list = new ArrayList();
         for (int i = 0; i < 15; i++) {
             list.add("a");
         }
@@ -77,7 +76,7 @@ class ArrayListTest {
     @DisplayName("Test add by index and verify content")
     @Test
     void testAddByIndex() {
-        ArrayList list = new ArrayList();
+        ArrayList <Integer>list = new ArrayList<Integer>();
         for (int i = 0; i < 5; i++) { //[0, 1, 2, 3, 4,....]
             list.add(i);
         }
@@ -103,7 +102,7 @@ class ArrayListTest {
     @DisplayName("Test add by index which is out of size must be exception")
     @Test
     void testAddByIndexOutOfSize() {
-        ArrayList list = new ArrayList();
+        ArrayList<Integer> list = new ArrayList();
         for (int i = 0; i < 5; i++) { //[0, 1, 2, 3, 4,....]
             list.add(i);
         }
@@ -116,7 +115,7 @@ class ArrayListTest {
     @DisplayName("Test add by index and remove by index")
     @Test
     void testAddByIndAndRemoveByInd(){
-        ArrayList arrayList = new ArrayList();
+        ArrayList<Integer> arrayList = new ArrayList();
         arrayList.add(100, 0);
         arrayList.add(200, 0);
         assertEquals(2, arrayList.size());
@@ -127,18 +126,18 @@ class ArrayListTest {
     @DisplayName("Test get and set element")
     @Test
     void testGetAndSet(){
-        ArrayList arrayList = new ArrayList();
+        ArrayList<Integer> arrayList = new ArrayList();
         for (int i = 0; i < 5; i++) {
             arrayList.add(i);
         }
-        assertEquals(2, arrayList.get(2));
-        assertEquals(2, arrayList.set(100, 2));
-        assertEquals(100, arrayList.get(2));
+        assertEquals(2, arrayList.get(2).byteValue());
+        assertEquals(2, arrayList.set(100, 2).byteValue());
+        assertEquals(100, arrayList.get(2).byteValue());
     }
     @DisplayName("Test set method after clear")
     @Test
     void testSetAfterClear(){
-        ArrayList arrayList = new ArrayList();
+        ArrayList<Integer> arrayList = new ArrayList();
         for (int i = 0; i < 5; i++) {
             arrayList.add(i);
         }
@@ -153,7 +152,7 @@ class ArrayListTest {
     @DisplayName("Test index of first, last and not presented elements")
     @Test
     void testIndexOf(){
-        ArrayList arrayList = new ArrayList();
+        ArrayList<Integer> arrayList = new ArrayList();
         for (int i = 0; i < 5; i++) {
             arrayList.add(i);
         }
@@ -164,7 +163,7 @@ class ArrayListTest {
     @DisplayName("Test last index of if list contains the same elements")
     @Test
     void testLastIndexOfElementsIfTheyMoreThanOne(){
-        ArrayList arrayList = new ArrayList();
+        ArrayList<Integer> arrayList = new ArrayList();
         arrayList.add(1); //0
         arrayList.add(100);
         arrayList.add(0);
@@ -178,7 +177,7 @@ class ArrayListTest {
     @DisplayName("Test toString method on not empty list")
     @Test
     void testToStingOnNotEmpty(){
-        ArrayList arrayList = new ArrayList();
+        ArrayList<Integer> arrayList = new ArrayList();
         for (int i = 0; i < 3; i++) {
             arrayList.add(100);
         }
@@ -188,13 +187,13 @@ class ArrayListTest {
     @DisplayName("Test toString method on empty list")
     @Test
     void testToStingOnEmpty(){
-        ArrayList arrayList = new ArrayList();
+        ArrayList<Integer> arrayList = new ArrayList();
         assertEquals("[]", arrayList.toString());
     }
     @DisplayName("Test toString method after clear method")
     @Test
     void testToStingAfterClear(){
-        ArrayList arrayList = new ArrayList();
+        ArrayList<Integer> arrayList = new ArrayList();
         for (int i = 0; i < 3; i++) {
             arrayList.add(100);
         }
@@ -204,7 +203,7 @@ class ArrayListTest {
     @DisplayName("Test toString method after remove all")
     @Test
     void testToStingAfterRemoveAll(){
-        ArrayList arrayList = new ArrayList();
+        ArrayList<Integer> arrayList = new ArrayList();
         for (int i = 0; i < 3; i++) {
             arrayList.add(100);
         }
@@ -213,7 +212,5 @@ class ArrayListTest {
         }
         assertEquals("[]", arrayList.toString());
     }
-
-
 
 }
