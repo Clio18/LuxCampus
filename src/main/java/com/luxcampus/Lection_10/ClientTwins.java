@@ -3,7 +3,7 @@ import java.io.*;
 import java.net.Socket;
 
 
-public class Client {
+public class ClientTwins {
     static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     static OutputStream outputStream;
     static InputStream inputStream;
@@ -15,8 +15,7 @@ public class Client {
         while (true) {
             //reading from input
             String entered = reader.readLine();
-            //break point is "-1"
-            if(entered.equals("-1")){
+            if (entered.equals("-1")) {
                 break;
             }
 
