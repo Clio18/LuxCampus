@@ -156,7 +156,7 @@ public class ArrayList<T> implements List<T> {
 
     private void ensureCapacity() {
         if (array.length == size) {
-            Object[] newArr = new Object[(3 * array.length) / 2];
+            Object[] newArr = new Object[((3 * array.length) / 2) + 1];
             for (int i = 0; i < array.length; i++) {
                 newArr[i] = array[i];
             }
@@ -188,6 +188,8 @@ public class ArrayList<T> implements List<T> {
         public void remove(){
             if(hasNext()){
                ArrayList.this.remove(position);
+            } else {
+                throw new IllegalArgumentException("Already deleted");
             }
 
         }

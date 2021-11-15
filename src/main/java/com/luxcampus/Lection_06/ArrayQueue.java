@@ -121,6 +121,8 @@ public class ArrayQueue<T> implements Queue<T> {
         public void remove(){
             if(hasNext()){
                 ArrayQueue.this.dequeue();
+            } else {
+                throw new IllegalArgumentException("Already deleted");
             }
         }
     }

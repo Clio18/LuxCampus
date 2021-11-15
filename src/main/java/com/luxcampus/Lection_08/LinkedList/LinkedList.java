@@ -197,6 +197,8 @@ public class LinkedList<T> implements List<T> {
         public void remove(){
             if (hasNext()){
                 LinkedList.this.remove(position);
+            } else {
+                throw new IllegalArgumentException("Already deleted");
             }
         }
     }
