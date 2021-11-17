@@ -5,39 +5,20 @@ import java.net.Socket;
 
 public class EchoServerThread extends Thread {
     private Socket socket;
-    static OutputStream outputStream;
-    static InputStream inputStream;
 
-    public EchoServerThread (Socket socket) {
+    public EchoServerThread(Socket socket) {
         this.socket = socket;
     }
 
     public void run() {
+        try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
             while (true) {
-                try {
-                    inputStream = socket.getInputStream();
-                    byte[] buffer = new byte[100];
-                    int count = inputStream.read(buffer);
-                    String letter = new String(buffer, 0, count);
-                    //making Echo response
-                    String message = "Echo: " + letter;
-                    outputStream = socket.getOutputStream();
-                    outputStream.write(message.getBytes());
-                } catch (IOException e) {
-                    try {
-                        closeResources(socket, inputStream, outputStream);
-                    } catch (IOException exception) {
-                        exception.printStackTrace();
-                    }
-                    e.printStackTrace();
-                }
+                String message = "Echo: " + in.readLine();
+                out.println(message);
             }
-
-    }
-
-    private void closeResources(Socket socket,  InputStream inputStream, OutputStream outputStream) throws IOException {
-        socket.close();
-        inputStream.close();
-        outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
