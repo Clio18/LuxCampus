@@ -1,17 +1,16 @@
 package com.luxcampus.Lection_11.CahtRoom;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.net.Socket;
 
 
 public class Client {
     private String name;
-    private BufferedReader reader;
-    private BufferedWriter writer;
+    private Socket socket;
 
-    public Client(String name, BufferedReader reader, BufferedWriter writer) {
+    public Client(String name, Socket socket) {
         this.name = name;
-        this.reader = reader;
-        this.writer = writer;
+        this.socket = socket;
     }
 
     public String getName() {
@@ -22,28 +21,11 @@ public class Client {
         this.name = name;
     }
 
-    public BufferedReader getReader() {
-        return reader;
+    public Socket getSocket() {
+        return socket;
     }
 
-    public void setReader(BufferedReader reader) {
-        this.reader = reader;
-    }
-
-    public BufferedWriter getWriter() {
-        return writer;
-    }
-
-    public void setWriter(BufferedWriter writer) {
-        this.writer = writer;
-    }
-
-    @Override
-    public String toString() {
-        return "Client{" +
-                "name='" + name + '\'' +
-                ", reader=" + reader +
-                ", writer=" + writer +
-                '}';
+    public void setSocket(Socket socket) {
+        this.socket = socket;
     }
 }
