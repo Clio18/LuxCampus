@@ -1,10 +1,13 @@
 package com.luxcampus.Lection_11.staticServerV2;
 
+import com.luxcampus.Lection_11.staticServerV2.domain.StatusCode;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 public class RequestHandler {
@@ -33,15 +36,14 @@ public class RequestHandler {
     }
 
     private void writeSuccessResponse(String content, BufferedWriter writer) throws IOException {
+        if (Objects.isNull(content)){
+            throw new ServerException(StatusCode.BAD_REQUEST);
+        }
         ResponseWriter responseWriter = new ResponseWriter();
         responseWriter.writeSuccessResponse(content, writer);
 
     }
 
-    private String readResources(String uri) throws IOException {
-        ResourceReader resourceReader = new ResourceReader(webAppPath);
-        return resourceReader.readResources(uri);
-    }
 
     private void writeNotFoundResponse(BufferedWriter writer) throws IOException {
         String response = "HTTP/1.1 404 Not Found\r\n" +
@@ -56,6 +58,12 @@ public class RequestHandler {
         writer.write(response);
         writer.flush();
 
+    }
+
+
+    private String readResources(String uri) throws IOException {
+        ResourceReader resourceReader = new ResourceReader(webAppPath);
+        return resourceReader.readResources(uri);
     }
 
     private Request parse(BufferedReader reader) throws IOException {
@@ -81,16 +89,11 @@ public class RequestHandler {
     }
 
     private static void injectURIAndMethod(String firstLine, Request request) {
-        // "GET /wiki/index.html HTTP/1.1";
+        if (Objects.isNull(firstLine)){
+            throw new ServerException(StatusCode.BAD_REQUEST);
+        }
         String[] pattern = firstLine.split("/");
         String method = pattern[0];
-//        String uri = "";
-//        for (int i = 0; i < pattern.length; i++) {
-//            if (pattern[i].contains("HTTP")) {
-//                String[] uriWithHTTP = pattern[i].split(" ");
-//                uri = uriWithHTTP[0].trim();
-//            }
-//        }
 
         String[] patternOnWhiteSpace = firstLine.split(" ");
         String target = patternOnWhiteSpace[1];
@@ -106,8 +109,10 @@ public class RequestHandler {
         request.setUri(uri);
         if (method.equals(HttpMethod.GET.toString())) {
             request.setHttpMethod(HttpMethod.GET);
-        } else {
+        } else if (method.equals(HttpMethod.POST.toString()))  {
             request.setHttpMethod(HttpMethod.POST);
+        } else {
+            throw new ServerException(StatusCode.METHOD_NOT_ALLOWED);
         }
     }
 }

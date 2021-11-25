@@ -7,12 +7,6 @@ public class Request {
     private Map<String, String> headers;
     private HttpMethod httpMethod;
 
-//    public Request(String uri, Map<String, String> headers, HttpMethod httpMethod) {
-//        this.uri = uri;
-//        this.headers = headers;
-//        this.httpMethod = httpMethod;
-//    }
-
     public String getUri() {
         return uri;
     }

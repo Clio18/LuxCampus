@@ -1,8 +1,8 @@
 package com.luxcampus.Lection_11.staticServerV2;
 
+import com.luxcampus.Lection_11.staticServerV2.domain.StatusCode;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.sql.SQLOutput;
 
 public class ResponseWriter {
     public void writeSuccessResponse(String content, BufferedWriter writer) throws IOException {
@@ -16,4 +16,10 @@ public class ResponseWriter {
         writer.write(result);
         writer.flush();
     }
+
+    public static void writeError(BufferedWriter writer, StatusCode statusCode) throws IOException {
+        writer.write("HTTP/1.1 " + statusCode.getCode() + " " + statusCode.getStatus());
+    }
+
+
 }

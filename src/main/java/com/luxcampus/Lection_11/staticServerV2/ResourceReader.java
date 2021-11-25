@@ -1,6 +1,9 @@
 package com.luxcampus.Lection_11.staticServerV2;
 
+import com.luxcampus.Lection_11.staticServerV2.domain.StatusCode;
+
 import java.io.*;
+
 
 public class ResourceReader {
     private String webAppPath;
@@ -32,5 +35,14 @@ public class ResourceReader {
         System.out.println("===== READ RESOURCES: =====");
         System.out.println(content);
         return content;
+//        byte[] content = new byte[(int) file.length()];
+//
+//        try (FileInputStream fileInputStream = new FileInputStream(file)) {
+//            fileInputStream.read(content);
+//        } catch (FileNotFoundException e) {
+//            throw new ServerException(StatusCode.NOT_FOUND);
+//        }
+//        return content;
+
     }
 }
