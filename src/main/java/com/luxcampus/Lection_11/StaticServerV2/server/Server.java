@@ -30,8 +30,8 @@ public class Server {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             while (true) {
                 try (Socket socket = serverSocket.accept();
-                     InputStreamReader reader = new InputStreamReader(socket.getInputStream());
-                     OutputStreamWriter writer = new OutputStreamWriter(socket.getOutputStream())) {
+                     InputStream reader = socket.getInputStream();
+                     OutputStream writer = socket.getOutputStream()) {
                     RequestHandler requestHandler = new RequestHandler(reader, writer, webAppPath);
                     requestHandler.handle();
                 }

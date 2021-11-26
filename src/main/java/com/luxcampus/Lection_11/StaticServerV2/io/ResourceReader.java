@@ -17,31 +17,40 @@ public class ResourceReader {
         this.webAppPath = webAppPath;
     }
 
-    public static Request parse(InputStreamReader reader) throws IOException {
+    public static Request parse(InputStream reader) throws IOException {
         Request request = new Request();
-        BufferedReader readerBuff = new BufferedReader(reader);
+        BufferedReader readerBuff = new BufferedReader(new InputStreamReader(reader));
         String firstLine = readerBuff.readLine();
         injectURIAndMethod(firstLine, request);
         injectHeader(readerBuff, request);
+
+        System.out.println(request.toString());
         return request;
     }
 
-    public static String readResources(String uri, String webAppPath) throws IOException {
+    public static InputStream readResources(String uri, String webAppPath) throws IOException {
         File file = new File(webAppPath, uri);
-        StringBuilder stringBuilder = new StringBuilder();
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
-            while (true) {
-                String line = bufferedReader.readLine();
-                if (Objects.isNull(line) || line.isEmpty()) {
-                    break;
-                }
-                stringBuilder.append(line + "\n");
-            }
+//        StringBuilder stringBuilder = new StringBuilder();
+//        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+//            while (true) {
+//                String line = bufferedReader.readLine();
+//                if (Objects.isNull(line) || line.isEmpty()) {
+//                    break;
+//                }
+//                stringBuilder.append(line + "\n");
+//            }
+//        } catch (FileNotFoundException e) {
+//            throw new ServerException(StatusCode.NOT_FOUND);
+//        }
+//        String content = stringBuilder.toString();
+//        return content;
+        FileInputStream inputStream;
+        try {
+            inputStream = new FileInputStream(file);
         } catch (FileNotFoundException e) {
             throw new ServerException(StatusCode.NOT_FOUND);
         }
-        String content = stringBuilder.toString();
-        return content;
+        return inputStream;
     }
 
     private static void injectHeader(BufferedReader readerBuff, Request request) throws IOException {

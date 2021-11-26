@@ -30,5 +30,14 @@ public class Request {
     public void setHttpMethod(HttpMethod httpMethod) {
         this.httpMethod = httpMethod;
     }
+
+    @Override
+    public String toString() {
+        return "Request{" +
+                "uri='" + uri + '\'' +
+                ", headers=" + headers +
+                ", httpMethod=" + httpMethod +
+                '}';
+    }
 }
 
