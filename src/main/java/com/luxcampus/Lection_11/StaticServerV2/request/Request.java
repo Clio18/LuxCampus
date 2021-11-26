@@ -1,4 +1,4 @@
-package com.luxcampus.Lection_11.staticServerV2;
+package com.luxcampus.Lection_11.StaticServerV2.request;
 
 import java.util.Map;
 
@@ -41,6 +41,3 @@ public class Request {
     }
 }
 
-enum HttpMethod{
-    POST, GET
-}

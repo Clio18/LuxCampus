@@ -1,4 +1,6 @@
-package com.luxcampus.Lection_11.staticServerV2;
+package com.luxcampus.Lection_11.StaticServerV2;
+
+import com.luxcampus.Lection_11.StaticServerV2.server.Server;
 
 import java.io.IOException;
 

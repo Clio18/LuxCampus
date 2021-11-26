@@ -1,6 +1,6 @@
-package com.luxcampus.Lection_11.staticServerV2;
+package com.luxcampus.Lection_11.StaticServerV2.exception;
 
-import com.luxcampus.Lection_11.staticServerV2.domain.StatusCode;
+import com.luxcampus.Lection_11.StaticServerV2.domain.StatusCode;
 
 public class ServerException extends RuntimeException {
     private StatusCode statusCode;

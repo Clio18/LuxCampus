@@ -1,7 +1,6 @@
-package com.luxcampus.Lection_11.staticServerV2.domain;
+package com.luxcampus.Lection_11.StaticServerV2.domain;
 
 public enum StatusCode {
-    OK(200, "Ok"),
     NOT_FOUND(404, "Not found"),
     INTERNAL_SERVER_ERROR(500, "Internal server error"),
     BAD_REQUEST(400, "Bad request"),
