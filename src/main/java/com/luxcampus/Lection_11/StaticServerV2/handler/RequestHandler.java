@@ -18,11 +18,9 @@ public class RequestHandler {
 
     public void handle() throws IOException {
         try {
-                System.out.println("====START====");
                 Request request = ResourceReader.parse(reader);
                 String content = ResourceReader.readResources(request.getUri(), webAppPath);
                 ResponseWriter.writeSuccessResponse(content, writer);
-                System.out.println("====FINISH====");
             } catch (ServerException e) {
                 ResponseWriter.writeError(writer, e.getStatusCode());
             }

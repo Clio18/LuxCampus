@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-
 public class ResourceReader {
     private String webAppPath;
 
@@ -30,7 +29,7 @@ public class ResourceReader {
     public static String readResources(String uri, String webAppPath) throws IOException {
         File file = new File(webAppPath, uri);
         StringBuilder stringBuilder = new StringBuilder();
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             while (true) {
                 String line = bufferedReader.readLine();
                 if (Objects.isNull(line) || line.isEmpty()) {
@@ -38,12 +37,10 @@ public class ResourceReader {
                 }
                 stringBuilder.append(line + "\n");
             }
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             throw new ServerException(StatusCode.NOT_FOUND);
         }
         String content = stringBuilder.toString();
-        System.out.println("===== READ RESOURCES: =====");
-        System.out.println(content);
         return content;
     }
 
@@ -64,8 +61,18 @@ public class ResourceReader {
         if (Objects.isNull(firstLine)) {
             throw new ServerException(StatusCode.BAD_REQUEST);
         }
-        String[] pattern = firstLine.split("/");
-        String method = pattern[0].trim();
+        String method = getMethod(firstLine);
+        String uri = getURI(firstLine);
+        request.setUri(uri);
+        HttpMethod httpMethod = HttpMethod.valueOf(method);
+        if (httpMethod.equals(HttpMethod.GET)) {
+            request.setHttpMethod(httpMethod);
+        } else if (httpMethod.equals(HttpMethod.POST)) {
+            throw new ServerException(StatusCode.METHOD_NOT_ALLOWED);
+        }
+    }
+
+    private static String getURI(String firstLine) {
         String[] patternOnWhiteSpace = firstLine.split(" ");
         String target = patternOnWhiteSpace[1];
         String[] patternOnSlash = target.split("/");
@@ -77,12 +84,12 @@ public class ResourceReader {
             stringJoiner.add(piece);
         }
         String uri = stringJoiner.toString();
-        request.setUri(uri);
-        HttpMethod httpMethod = HttpMethod.valueOf(method);
-        if(httpMethod.equals(HttpMethod.GET)) {
-            request.setHttpMethod(httpMethod);
-        }else if (httpMethod.equals(HttpMethod.POST)) {
-            throw new ServerException(StatusCode.METHOD_NOT_ALLOWED);
-        }
+        return uri;
+    }
+
+    private static String getMethod(String firstLine) {
+        String[] pattern = firstLine.split("/");
+        String method = pattern[0].trim();
+        return method;
     }
 }

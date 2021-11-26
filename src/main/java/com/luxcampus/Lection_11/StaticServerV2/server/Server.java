@@ -33,7 +33,6 @@ public class Server {
                      InputStreamReader reader = new InputStreamReader(socket.getInputStream());
                      OutputStreamWriter writer = new OutputStreamWriter(socket.getOutputStream())) {
                     RequestHandler requestHandler = new RequestHandler(reader, writer, webAppPath);
-                    System.out.println("====SERVER RUN====");
                     requestHandler.handle();
                 }
             }
