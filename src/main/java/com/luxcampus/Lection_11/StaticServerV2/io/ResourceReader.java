@@ -17,33 +17,18 @@ public class ResourceReader {
         this.webAppPath = webAppPath;
     }
 
-    public static Request parse(InputStream reader) throws IOException {
+    public static Request parse(BufferedReader reader) throws IOException {
         Request request = new Request();
-        BufferedReader readerBuff = new BufferedReader(new InputStreamReader(reader));
-        String firstLine = readerBuff.readLine();
-        injectURIAndMethod(firstLine, request);
-        injectHeader(readerBuff, request);
+        String firstLine = reader.readLine();
+        System.out.println("FIRST LINE: " + firstLine);
 
-        System.out.println(request.toString());
+        injectURIAndMethod(firstLine, request);
+        injectHeader(reader, request);
         return request;
     }
 
-    public static InputStream readResources(String uri, String webAppPath) throws IOException {
+    public InputStream readResources(String uri) throws IOException {
         File file = new File(webAppPath, uri);
-//        StringBuilder stringBuilder = new StringBuilder();
-//        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
-//            while (true) {
-//                String line = bufferedReader.readLine();
-//                if (Objects.isNull(line) || line.isEmpty()) {
-//                    break;
-//                }
-//                stringBuilder.append(line + "\n");
-//            }
-//        } catch (FileNotFoundException e) {
-//            throw new ServerException(StatusCode.NOT_FOUND);
-//        }
-//        String content = stringBuilder.toString();
-//        return content;
         FileInputStream inputStream;
         try {
             inputStream = new FileInputStream(file);
@@ -60,7 +45,7 @@ public class ResourceReader {
             if (s == null || s.trim().length() == 0) {
                 break;
             }
-            String[] data = s.split(":");
+            String[] data = s.split(": ");
             map.put(data[0], data[1]);
         }
         request.setHeaders(map);

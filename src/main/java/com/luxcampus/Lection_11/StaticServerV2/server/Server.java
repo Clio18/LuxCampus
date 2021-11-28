@@ -1,6 +1,7 @@
 package com.luxcampus.Lection_11.StaticServerV2.server;
 
 import com.luxcampus.Lection_11.StaticServerV2.handler.RequestHandler;
+import com.luxcampus.Lection_11.StaticServerV2.io.ResourceReader;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -30,9 +31,10 @@ public class Server {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             while (true) {
                 try (Socket socket = serverSocket.accept();
-                     InputStream reader = socket.getInputStream();
+                     BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                      OutputStream writer = socket.getOutputStream()) {
-                    RequestHandler requestHandler = new RequestHandler(reader, writer, webAppPath);
+                    ResourceReader resourceReader = new ResourceReader(webAppPath);
+                    RequestHandler requestHandler = new RequestHandler(reader, writer, resourceReader);
                     requestHandler.handle();
                 }
             }

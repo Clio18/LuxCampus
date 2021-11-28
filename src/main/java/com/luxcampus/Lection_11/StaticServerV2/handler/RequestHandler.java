@@ -8,21 +8,21 @@ import com.luxcampus.Lection_11.StaticServerV2.io.ResponseWriter;
 import java.io.*;
 
 public class RequestHandler {
-    private InputStream reader;
+    private BufferedReader reader;
     private OutputStream writer;
-    private String webAppPath;
+    private ResourceReader resourceReader;
 
-    public RequestHandler(InputStream reader, OutputStream writer, String webAppPath) {
+        public RequestHandler(BufferedReader reader, OutputStream writer, ResourceReader resourceReader) {
         this.reader = reader;
         this.writer = writer;
-        this.webAppPath = webAppPath;
+        this.resourceReader = resourceReader;
     }
 
     public void handle() throws IOException {
-        try {
-            Request request = ResourceReader.parse(reader);
-            //String content = ResourceReader.readResources(request.getUri(), webAppPath);
-            InputStream content = ResourceReader.readResources(request.getUri(), webAppPath);
+        Request request = ResourceReader.parse(reader);
+        try (InputStream content = resourceReader.readResources(request.getUri())){
+
+            System.out.println("===READ ALL CONTENT====");
             byte[] f = content.readAllBytes();
             String a = new String(f);
             System.out.println(a);
