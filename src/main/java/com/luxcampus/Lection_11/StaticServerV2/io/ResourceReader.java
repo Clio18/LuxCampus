@@ -20,22 +20,18 @@ public class ResourceReader {
     public static Request parse(BufferedReader reader) throws IOException {
         Request request = new Request();
         String firstLine = reader.readLine();
-        System.out.println("FIRST LINE: " + firstLine);
-
         injectURIAndMethod(firstLine, request);
         injectHeader(reader, request);
         return request;
     }
 
-    public InputStream readResources(String uri) throws IOException {
+    public InputStream readResources(String uri) {
         File file = new File(webAppPath, uri);
-        FileInputStream inputStream;
         try {
-            inputStream = new FileInputStream(file);
+            return new FileInputStream(file);
         } catch (FileNotFoundException e) {
             throw new ServerException(StatusCode.NOT_FOUND);
         }
-        return inputStream;
     }
 
     private static void injectHeader(BufferedReader readerBuff, Request request) throws IOException {

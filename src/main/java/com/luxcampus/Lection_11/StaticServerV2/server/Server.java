@@ -34,7 +34,7 @@ public class Server {
                      BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                      OutputStream writer = socket.getOutputStream()) {
                     ResourceReader resourceReader = new ResourceReader(webAppPath);
-                    RequestHandler requestHandler = new RequestHandler(reader, writer, resourceReader);
+                    RequestHandler requestHandler = new RequestHandler(reader, resourceReader, writer);
                     requestHandler.handle();
                 }
             }

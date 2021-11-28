@@ -9,24 +9,20 @@ import java.io.*;
 
 public class RequestHandler {
     private BufferedReader reader;
-    private OutputStream writer;
     private ResourceReader resourceReader;
+    private OutputStream writer;
 
-        public RequestHandler(BufferedReader reader, OutputStream writer, ResourceReader resourceReader) {
+
+    public RequestHandler(BufferedReader reader, ResourceReader resourceReader, OutputStream writer) {
         this.reader = reader;
-        this.writer = writer;
         this.resourceReader = resourceReader;
+        this.writer = writer;
     }
 
     public void handle() throws IOException {
         Request request = ResourceReader.parse(reader);
-        try (InputStream content = resourceReader.readResources(request.getUri())){
-
-            System.out.println("===READ ALL CONTENT====");
-            byte[] f = content.readAllBytes();
-            String a = new String(f);
-            System.out.println(a);
-
+        try {
+            InputStream content = resourceReader.readResources(request.getUri());
             ResponseWriter.writeSuccessResponse(content, writer);
         } catch (ServerException e) {
             ResponseWriter.writeError(writer, e.getStatusCode());
